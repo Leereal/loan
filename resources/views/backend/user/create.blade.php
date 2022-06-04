@@ -26,26 +26,27 @@
                             <div class="form-group row">
                                 <label class="col-xl-3 col-form-label">{{ _lang('ID Number') }}</label>
                                 <div class="col-xl-9">
-                                    <input type="text" class="form-control" name="id_number" value="{{ old('id_number') }}"
-                                        required>
+                                    <input type="text" class="form-control" name="id_number"
+                                        value="{{ old('id_number') }}" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-xl-3 col-form-label">{{ _lang('Email') }}</label>
                                 <div class="col-xl-9">
-                                    <input type="text" class="form-control" name="email" value="{{ old('email') }}"
-                                        required>
+                                    <input type="text" class="form-control" name="email" value="{{ old('email') }}">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-xl-3 col-form-label">{{ _lang('Country Code') }}</label>
                                 <div class="col-xl-9">
-                                    <select class="form-control select2 auto-select" data-selected="{{ old('country_code') }}" name="country_code" required>
+                                    <select class="form-control select2 auto-select"
+                                        data-selected="{{ old('country_code') }}" name="country_code" required>
                                         <option value="">{{ _lang('Select One') }}</option>
                                         @foreach(get_country_codes() as $key => $value)
-                                        <option value="{{ $value['dial_code'] }}">{{ $value['country'].' (+'.$value['dial_code'].')' }}</option>
+                                        <option value="{{ $value['dial_code'] }}">{{ $value['country'].'
+                                            (+'.$value['dial_code'].')' }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -55,14 +56,15 @@
                             <div class="form-group row">
                                 <label class="col-xl-3 col-form-label">{{ _lang('Phone') }}</label>
                                 <div class="col-xl-9">
-                                    <input type="text" class="form-control" name="phone" value="{{ old('phone') }}" required>
+                                    <input type="text" class="form-control" name="phone" value="{{ old('phone') }}"
+                                        required>
                                     <p>eg: 772123456</p>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-xl-3 col-form-label">{{ _lang('Physical Address') }}</label>
-                                <div class="col-xl-9">                                    
+                                <div class="col-xl-9">
                                     <textarea class="form-control" name="address">{{ old('address') }}</textarea required>
                                 </div>
                             </div>
