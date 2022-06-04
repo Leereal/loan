@@ -178,15 +178,19 @@ class UserController extends Controller {
      */
     public function show(Request $request, $id) {
         $user = User::find($id);
-        $banking_details        = BankingDetail::where('user_id', $id)->get();
-        $employment_detail      = EmploymentDetail::find('user_id', $id);        
-        $next_of_kin            = NextOfKin::find('user_id', $id); 
-        $guarantor              = Guarantor::find('user_id', $id);        
-        if (!$request->ajax()) {
-            return view('backend.user.view', compact('user', 'id','banking_details'));
-        } else {
-            return view('backend.user.modal.view', compact('user', 'id','banking_details'));
-        }
+        $banking_details       = BankingDetail::where('user_id',$id)->get();
+        $employment_detail      = EmploymentDetail::where('user_id',$id)->first();
+        $next_of_kin            = NextOfKin::where('user_id',$id)->first();
+        $guarantor              = Guarantor::where('user_id',$id)->first();   
+
+       if (!$request->ajax()) {
+           return view('backend.user.view', compact('user', 'id','banking_details','employment_detail','next_of_kin','guarantor'));
+       } else {
+           return view('backend.user.modal.view', compact('user', 'id','banking_details','employment_detail','next_of_kin','guarantor'));
+       }
+      
+
+       
 
     }
 
