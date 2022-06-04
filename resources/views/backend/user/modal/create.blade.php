@@ -1,4 +1,5 @@
-<form method="post" class="ajax-screen-submit" autocomplete="off" action="{{ route('users.store') }}" enctype="multipart/form-data">
+<form method="post" class="ajax-screen-submit" autocomplete="off" action="{{ route('users.store') }}"
+	enctype="multipart/form-data">
 	{{ csrf_field() }}
 
 	<div class="row p-2">
@@ -11,25 +12,27 @@
 
 		<div class="col-md-6">
 			<div class="form-group">
-				<label class="control-label">{{ _lang('Email') }}</label>
-				<input type="text" class="form-control" name="email" value="{{ old('email') }}" required>
+				<label class="control-label">{{ _lang('ID Number') }}</label>
+				<input type="id_number" class="form-control" name="id_number" value="{{ old('id_number') }}" required>
 			</div>
 		</div>
 
 		<div class="col-md-6">
 			<div class="form-group">
-				<label class="control-label">{{ _lang('Password') }}</label>
-				<input type="password" class="form-control" name="password" value="{{ old('password') }}" required>
+				<label class="control-label">{{ _lang('Email') }}</label>
+				<input type="text" class="form-control" name="email" value="{{ old('email') }}">
 			</div>
 		</div>
 
 		<div class="col-md-6">
 			<div class="form-group">
 				<label class="control-label">{{ _lang('Country Code') }}</label>
-				<select class="form-control select2 auto-select" data-selected="{{ old('country_code') }}" name="country_code" required>
+				<select class="form-control select2 auto-select" data-selected="{{ old('country_code') }}"
+					name="country_code" required>
 					<option value="">{{ _lang('Select One') }}</option>
 					@foreach(get_country_codes() as $key => $value)
-						<option value="{{ $value['dial_code'] }}">{{ $value['country'].' (+'.$value['dial_code'].')' }}</option>
+					<option value="{{ $value['dial_code'] }}">{{ $value['country'].' (+'.$value['dial_code'].')' }}
+					</option>
 					@endforeach
 				</select>
 			</div>
@@ -40,6 +43,13 @@
 				<label class="control-label">{{ _lang('Phone') }}</label>
 				<input type="text" class="form-control" name="phone" value="{{ old('phone') }}" required>
 				<p>eg: 772123456</p>
+			</div>
+		</div>
+
+		<div class="col-md-12">
+			<div class="form-group">
+				<label class="control-label"> {{ _lang('Physical Address') }}</label>
+				<textarea class="form-control" name="address">{{ old('address') }}</textarea required>		
 			</div>
 		</div>
 

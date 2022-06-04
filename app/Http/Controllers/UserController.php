@@ -114,7 +114,7 @@ class UserController extends Controller {
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
             'name'            => 'required|max:255',
-            'email'           => 'required|email|unique:users|max:255',
+            'email'           => 'nullable|email|unique:users|max:255',
             'branch_id'       => 'required',
             'status'          => 'required',
             'id_number'          => 'required',
