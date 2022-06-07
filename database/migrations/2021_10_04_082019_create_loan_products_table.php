@@ -20,6 +20,7 @@ class CreateLoanProductsTable extends Migration {
             $table->decimal('interest_rate', 10, 2);
             $table->decimal('admin_fee', 10, 2);
             $table->decimal('penalty_fee', 10, 2); 
+            $table->decimal('ceil_factor', 10, 2); 
             $table->string('interest_type');
             $table->integer('term');
             $table->string('term_period', 15);
