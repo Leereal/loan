@@ -13,4 +13,9 @@ class LoanProduct extends Model {
      * @var string
      */
     protected $table = 'loan_products';
+
+    public function loans() {
+        return $this->hasMany('App\Models\Loan', 'loan_product_id');
+    }
+
 }

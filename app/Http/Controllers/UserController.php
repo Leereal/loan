@@ -7,11 +7,13 @@ use App\Models\BankingDetail;
 use App\Models\EmploymentDetail;
 use App\Models\Guarantor;
 use App\Models\NextOfKin;
+use App\Models\Setting;
 use App\Models\User;
 use App\Utilities\Overrider;
 use DataTables;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -60,6 +62,13 @@ class UserController extends Controller {
             ->orderBy("users.id", "desc");
 
         return Datatables::eloquent($users)
+            ->filter(function ($query){
+
+                if(get_setting(Setting::get(),'branch_view')== 'enabled' && Auth::user()->user_type != 'admin' ){
+                    $query->where('loans.branch_id', Auth::user()->branch->id);                    
+                }
+            }, true)
+
             ->editColumn('phone', function ($user) {
                 return '+' . $user->country_code . '-' . $user->phone;
             })

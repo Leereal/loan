@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use App\Models\Transaction;
 use DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionController extends Controller {
 
@@ -34,6 +36,9 @@ class TransactionController extends Controller {
 
         return Datatables::eloquent($transactions)
             ->filter(function ($query) use ($request) {
+                if(get_setting(Setting::get(),'branch_view')== 'enabled' && Auth::user()->user_type != 'admin' ){
+                    $query->where('loans.branch_id', Auth::user()->branch->id);                    
+                }
                 if ($request->has('status')) {
                     $query->where('status', $request->status);
                 }
