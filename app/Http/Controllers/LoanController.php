@@ -48,6 +48,9 @@ class LoanController extends Controller {
 
         return Datatables::eloquent($loans)
             ->filter(function ($query) use ($request) {
+                if(get_setting(Setting::get(),'branch_view')== 'enabled' && Auth::user()->user_type != 'admin' ){
+                    $query->where('loans.branch_id', Auth::user()->branch->id);                    
+                }
                 if ($request->has('status')) {
                     $query->where('status', $request->status);
                 }
@@ -192,6 +195,7 @@ class LoanController extends Controller {
         $loan->save();
 
         DB::commit();
+        
 
         if (!$request->ajax()) {
             return redirect()->route('loans.show', $loan->id)->with('success', _lang('New Loan added successfully'));

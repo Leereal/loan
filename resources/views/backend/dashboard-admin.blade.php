@@ -165,7 +165,7 @@
 					$class = $transaction->dr_cr == 'dr' ? 'text-danger' : 'text-success';
 					@endphp
 					<tr>
-						<td>{{ $transaction->created_at }}</td>
+						<td>{{ \Carbon\Carbon::parse($transaction->created_at)->diffForHumans() }}</td>
 						<td>{{ $transaction->currency->name }}</td>
 						@if($transaction->dr_cr == 'dr')
 						<td>{{ decimalPlace(($transaction->amount - $transaction->fee),

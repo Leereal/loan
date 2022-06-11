@@ -20,6 +20,11 @@ class Loan extends Model {
         return $this->belongsTo('App\Models\User', 'borrower_id')->withDefault();
     }
 
+    public function branch() {
+        return $this->belongsTo('App\Models\Branch', 'branch_id')->withDefault();
+    }
+
+
     public function currency() {
         return $this->belongsTo('App\Models\Currency', 'currency_id')->withDefault();
     }

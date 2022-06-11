@@ -190,6 +190,12 @@ Route::middleware(['install'])->group(function () use ($email_verification, $all
             Route::post('transactions/get_table_data', 'TransactionController@get_table_data');
             Route::get('transactions', 'TransactionController@index')->name('transactions.index');
 
+            //Registers
+            Route::post('registers/get_table_data', 'RegistersController@get_table_data');
+            Route::post('registers/get_register_table_data', 'RegistersController@get_register_table_data');
+            Route::get('registers', 'RegistersController@index')->name('registers.index');
+            Route::get('registers/view/{name?}', 'RegistersController@view')->name('registers.view');
+
             //Loan Product Controller
             Route::resource('loan_products', 'LoanProductController');
 

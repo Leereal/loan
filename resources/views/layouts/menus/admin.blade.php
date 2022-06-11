@@ -5,7 +5,8 @@
 	{{ _lang('Dashboard') }}
 </a>
 
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#users" aria-expanded="false" aria-controls="collapseLayouts">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#users" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-users-alt-3"></i></div>
 	{{ _lang('Clients') }}
 	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
@@ -14,20 +15,21 @@
 	<nav class="sb-sidenav-menu-nested nav">
 		<a class="nav-link" href="{{ route('users.create') }}">{{ _lang('Add Client') }}</a>
 		<a class="nav-link" href="{{ route('users.index') }}">{{ _lang('All Clients') }}</a>
-		<a class="nav-link" href="{{ route('users.filter') }}/email_verified">{{ _lang('Email Verified') }}</a>
+		{{-- <a class="nav-link" href="{{ route('users.filter') }}/email_verified">{{ _lang('Email Verified') }}</a>
 		<a class="nav-link" href="{{ route('users.filter') }}/sms_verified">{{ _lang('SMS Verified') }}</a>
 		<a class="nav-link" href="{{ route('users.filter') }}/email_unverified">{{ _lang('Email Unverified') }}</a>
-		<a class="nav-link" href="{{ route('users.filter') }}/sms_unverified">{{ _lang('SMS Unverified') }}</a>
+		<a class="nav-link" href="{{ route('users.filter') }}/sms_unverified">{{ _lang('SMS Unverified') }}</a> --}}
 	</nav>
 </div>
-{{-- 
+{{--
 <a class="nav-link" href="{{ route('transfer_requests.index') }}">
 	<div class="sb-nav-link-icon"><i class="icofont-bank-transfer-alt"></i></div>
 	{{ _lang('Transfer Request') }}
 	{!! xss_clean(request_count('wire_transfer_requests',true)) !!}
 </a> --}}
 
-{{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#deposit" aria-expanded="false" aria-controls="collapseLayouts">
+{{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#deposit" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-plus-square"></i></div>
 	{{ _lang('Deposit') }}
 	{!! xss_clean(request_count('deposit_requests',true)) !!}
@@ -40,8 +42,9 @@
 		<a class="nav-link" href="{{ route('deposits.index') }}">{{ _lang('Deposit History') }}</a>
 	</nav>
 </div> --}}
-{{-- 
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#withdraw" aria-expanded="false" aria-controls="collapseLayouts">
+{{--
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#withdraw" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-minus-square"></i></div>
 	{{ _lang('Withdraw') }}
 	{!! xss_clean(request_count('withdraw_requests',true)) !!}
@@ -54,13 +57,8 @@
 		<a class="nav-link" href="{{ route('withdraw.index') }}">{{ _lang('Withdraw History') }}</a>
 	</nav>
 </div> --}}
-
-<a class="nav-link" href="{{ route('transactions.index') }}">
-	<div class="sb-nav-link-icon"><i class="icofont-listing-number"></i></div>
-	{{ _lang('All Transactions') }}
-</a>
-
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#loans" aria-expanded="false" aria-controls="collapseLayouts">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#loans" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-dollar-minus"></i></div>
 	{{ _lang('Loan Management') }}
 	{!! xss_clean(request_count('pending_loans',true)) !!}
@@ -68,15 +66,33 @@
 </a>
 <div class="collapse" id="loans" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 	<nav class="sb-sidenav-menu-nested nav">
-		<a class="nav-link" href="{{ route('loans.index') }}">{{ _lang('All Loans') }}</a>
+		<a class="nav-link" href="{{ route('loans.create') }}">{{ _lang('Disburse Loan') }}</a>
+		<a class="nav-link" href="{{ route('loans.repayments') }}">{{ _lang('Repay Loan') }}</a>
+		<a class="nav-link" href="{{ route('loans.index') }}">{{ _lang('View Loans') }}</a>
 		<a class="nav-link" href="{{ route('loans.calculator') }}">{{ _lang('Loan Calculator') }}</a>
-		<a class="nav-link" href="{{ route('loans.create') }}">{{ _lang('Add New Loan') }}</a>
-		<a class="nav-link" href="{{ route('loans.repayments') }}">{{ _lang('Loan Repayments') }}</a>
-		<a class="nav-link" href="{{ route('loan_products.index') }}">{{ _lang('Loan Products') }}</a>
+	</nav>
+</div>
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reports" aria-expanded="false"
+	aria-controls="collapseLayouts">
+	<div class="sb-nav-link-icon"><i class="icofont-book"></i></div>
+	{{ _lang('Reports') }}
+	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
+</a>
+<div class="collapse" id="reports" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+	<nav class="sb-sidenav-menu-nested nav">
+		<a class="nav-link" href="{{ route('registers.index') }}">{{ _lang('Registers Summary') }}</a>
+		<a class="nav-link" href="{{ route('registers.view') }}">{{ _lang('Registers') }}</a>
 	</nav>
 </div>
 
-{{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#fdr" aria-expanded="false" aria-controls="collapseLayouts">
+<a class="nav-link" href="{{ route('transactions.index') }}">
+	<div class="sb-nav-link-icon"><i class="icofont-listing-number"></i></div>
+	{{ _lang('All Transactions') }}
+</a>
+
+
+{{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#fdr" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-money"></i></div>
 	{{ _lang('Fixed Deposit') }}
 	{!! xss_clean(request_count('fdr_requests',true)) !!}
@@ -90,7 +106,8 @@
 	</nav>
 </div> --}}
 
-{{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#gift_card" aria-expanded="false" aria-controls="collapseLayouts">
+{{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#gift_card" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-gift"></i></div>
 	{{ _lang('Gift Cards') }}
 	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
@@ -102,7 +119,8 @@
 	</nav>
 </div> --}}
 
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tickets" aria-expanded="false" aria-controls="collapseLayouts">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tickets" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-live-support"></i></div>
 	{{ _lang('Support Tickets') }}
 	{!! xss_clean(request_count('pending_tickets',true)) !!}
@@ -110,9 +128,12 @@
 </a>
 <div class="collapse" id="tickets" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 	<nav class="sb-sidenav-menu-nested nav">
-		<a class="nav-link" href="{{ route('support_tickets.index',['status' => 'active']) }}">{{ _lang('Active Tickets') }}</a>
-		<a class="nav-link" href="{{ route('support_tickets.index',['status' => 'pending']) }}">{{ _lang('Pending Tickets') }}</a>
-		<a class="nav-link" href="{{ route('support_tickets.index',['status' => 'closed']) }}">{{ _lang('Closed Tickets') }}</a>
+		<a class="nav-link" href="{{ route('support_tickets.index',['status' => 'active']) }}">{{ _lang('Active
+			Tickets') }}</a>
+		<a class="nav-link" href="{{ route('support_tickets.index',['status' => 'pending']) }}">{{ _lang('Pending
+			Tickets') }}</a>
+		<a class="nav-link" href="{{ route('support_tickets.index',['status' => 'closed']) }}">{{ _lang('Closed
+			Tickets') }}</a>
 		<a class="nav-link" href="{{ route('support_tickets.create') }}">{{ _lang('Add New Ticket') }}</a>
 	</nav>
 </div>
@@ -123,13 +144,18 @@
 	<div class="sb-nav-link-icon"><i class="icofont-site-map"></i></div>
 	{{ _lang('Branches') }}
 </a>
+<a class="nav-link" href="{{ route('loan_products.index') }}">
+	<div class="sb-nav-link-icon"><i class="icofont-site-map"></i></div>
+	{{ _lang('Loan Products') }}
+</a>
 
 {{-- <a class="nav-link" href="{{ route('other_banks.index') }}">
 	<div class="sb-nav-link-icon"><i class="icofont-bank"></i></div>
 	{{ _lang('Other Banks') }}
 </a> --}}
 
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#systemUsers" aria-expanded="false" aria-controls="collapseLayouts">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#systemUsers" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-users-alt-4"></i></div>
 	{{ _lang('System Users') }}
 	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
@@ -147,7 +173,8 @@
 	{{ _lang('Currency List') }}
 </a>
 
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#deposit_settings" aria-expanded="false" aria-controls="collapseLayouts">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#deposit_settings" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-credit-card"></i></div>
 	{{ _lang('Transactions Settings') }}
 	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
@@ -157,11 +184,13 @@
 		{{-- <a class="nav-link" href="{{ route('payment_gateways.index') }}">{{ _lang('Deposit Gateways') }}</a> --}}
 		<a class="nav-link" href="{{ route('deposit_methods.index') }}">{{ _lang('Deposit Methods') }}</a>
 		<a class="nav-link" href="{{ route('withdraw_methods.index') }}">{{ _lang('Withdraw Methods') }}</a>
-		{{-- <a class="nav-link" href="{{ route('settings.system_settings') }}/transactions_fee">{{ _lang('Transactions Fee') }}</a> --}}
+		{{-- <a class="nav-link" href="{{ route('settings.system_settings') }}/transactions_fee">{{ _lang('Transactions
+			Fee') }}</a> --}}
 	</nav>
 </div>
 
-{{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#websiteManagement" aria-expanded="false" aria-controls="collapseLayouts">
+{{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#websiteManagement"
+	aria-expanded="false" aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-monitor"></i></div>
 	{{ _lang('Website Management') }}
 	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
@@ -179,7 +208,8 @@
 </div> --}}
 
 
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#administration" aria-expanded="false" aria-controls="collapseLayouts">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#administration" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-settings-alt"></i></div>
 	{{ _lang('Administration') }}
 	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
@@ -192,7 +222,8 @@
 	</nav>
 </div>
 
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#languages" aria-expanded="false" aria-controls="collapseLayouts">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#languages" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-world"></i></div>
 	{{ _lang('Languages') }}
 	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
