@@ -619,10 +619,6 @@ class LoanController extends Controller {
 
     }
 
-    public function repayments(Request $request){        
-        return view('backend.loan_repayment.list');                        
-    }
-
     public function repay(Request $request, $loan_id){
         
         if($request->isMethod("get")){
@@ -662,7 +658,7 @@ class LoanController extends Controller {
             $loanpayment->paid_at        = date('Y-m-d');
             $loanpayment->late_penalties = 0;
             $loanpayment->interest       = $repayment->interest;
-            $loanpayment->amount_to_pay  = $repayment->amount_to_pay;
+            $loanpayment->amount_to_pay  = $amount;//$repayment->amount_to_pay;
             $loanpayment->remarks        = $request->remarks;
             $loanpayment->transaction_id = $debit->id;
             $loanpayment->repayment_id   = $repayment->id;
@@ -672,10 +668,14 @@ class LoanController extends Controller {
             $loanpayment->save();
 
             //Update Loan Balance
-            $repayment->status = 1; // That is if the loan is cleared// If not cleared remain the same
+            if($amount < $repayment->amount_to_pay){ // Check if amount which is being paid is enough to clear the loan installment
+                $repayment->amount_to_pay = ($repayment->amount_to_pay - $amount);
+            }else{
+                $repayment->status = 1;
+            }          
             $repayment->save();
 
-            $loan->total_paid = $loan->total_paid + $repayment->amount_to_pay;//Take it from the form field not default 
+            $loan->total_paid = $loan->total_paid +  $amount;//$repayment->amount_to_pay;//Take it from the form field not default 
             if ($loan->total_paid >= $loan->total_payable) { //Check if loan balance is cleared
                 $loan->status = 2;
             }

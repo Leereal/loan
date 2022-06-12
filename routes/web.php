@@ -202,8 +202,7 @@ Route::middleware(['install'])->group(function () use ($email_verification, $all
             //Loan Controller
             Route::post('loans/get_table_data', 'LoanController@get_table_data');
             // Route::get('loans/calculator', 'LoanController@calculator')->name('loans.calculator');         
-            Route::match(['get', 'post'], 'loans/calculator', 'Customer\LoanController@calculator')->name('loans.calculator');
-            Route::get('loans/repayments', 'LoanController@repayments')->name('loans.repayments');
+            Route::match(['get', 'post'], 'loans/calculator', 'Customer\LoanController@calculator')->name('loans.calculator');       
             Route::match(['get', 'post'], 'loans/repay/{id}', 'LoanController@repay')->name('loans.repay');
             Route::post('loans/calculator/calculate', 'LoanController@calculate')->name('loans.calculate');
             Route::get('loans/approve/{id}', 'LoanController@approve')->name('loans.approve');
