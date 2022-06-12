@@ -234,6 +234,13 @@ if (!function_exists('get_setting')) {
     }
 }
 
+if (!function_exists('ceil_amount')) {
+    function ceil_amount($amount, $ceil_factor) {
+        $value = ceil($amount/$ceil_factor) *  $ceil_factor;
+        return $value;
+    }
+}
+
 if (!function_exists('get_trans_option')) {
     function get_trans_option($name, $optional = '') {
         $value = Cache::get($name . "-" . get_language());

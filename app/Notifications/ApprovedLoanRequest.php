@@ -54,7 +54,7 @@ class ApprovedLoanRequest extends Notification {
         $amount   = decimalPlace($this->transaction->amount, currency($this->transaction->currency->name));
         $dateTime = $this->transaction->created_at;
         return (new SmsMessage())
-            ->setContent("Dear Sir, Your loan request has been approved. Your account has been credited by $amount on $dateTime")
+            ->setContent("Dear Sir / Madam, Your loan request has been approved. Your account has been credited by $amount on $dateTime")
             ->setRecipient($notifiable->country_code . $notifiable->phone);
     }
 
@@ -68,7 +68,7 @@ class ApprovedLoanRequest extends Notification {
         $amount   = decimalPlace($this->transaction->amount, currency($this->transaction->currency->name));
         $dateTime = $this->transaction->created_at;
         return [
-            'message' => "Dear Sir, Your loan request has been approved. Your account has been credited by $amount on $dateTime",
+            'message' => "Dear Sir / Madam, Your loan request has been approved. Your account has been credited by $amount on $dateTime",
         ];
     }
 }

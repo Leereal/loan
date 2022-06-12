@@ -15,29 +15,35 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">{{ _lang('Loan ID') }}</label>
-                                <input type="text" class="form-control" name="loan_id" value="{{ $loan->loan_id }}" readonly="true" required>
+                                <input type="text" class="form-control" name="loan_id" value="{{ $loan->loan_id }}"
+                                    readonly="true" required>
                             </div>
                         </div>
 
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">{{ _lang('Client Name') }}</label>
-                                <input type="text" class="form-control" value="{{ $loan->borrower->name }}" readonly="true" required>
+                                <input type="text" class="form-control" value="{{ $loan->borrower->name . " (" .
+                                    $loan->borrower->id_number. ")"}}"
+                                readonly="true" required>
                             </div>
                         </div>
 
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">{{ _lang('Loan Due Date') }}</label>
-                                <input type="text" class="form-control"  value="{{ $loan->next_payment->repayment_date }}" readonly="true">
+                                <input type="text" class="form-control"
+                                    value="{{ $loan->next_payment->repayment_date }}" readonly="true">
                             </div>
                         </div>
 
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="control-label">{{ _lang('Amount To Pay') }}</label>
+                                <label class="control-label">{{ _lang('Amount To Pay') }} | {{ $loan->currency->name
+                                    }}{{ $loan->next_payment->amount_to_pay }}</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control float-field" name="amount_to_pay" id="amount_to_pay" value="{{ $loan->next_payment->amount_to_pay }}" readonly="true" required>
+                                    <input type="text" class="form-control float-field" name="amount_to_pay"
+                                        id="amount_to_pay" value="" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text currency">{{ $loan->currency->name }}</span>
                                     </div>
@@ -53,10 +59,11 @@
                         </div>
 
                         <div class="col-md-12">
-							<div class="form-group">
-								<button type="submit" class="btn btn-primary btn-lg btn-block"><i class="icofont-check-circled"></i> {{ _lang('Make Payment') }}</button>
-							</div>
-						</div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block"><i
+                                        class="icofont-check-circled"></i> {{ _lang('Make Payment') }}</button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -64,4 +71,3 @@
     </div>
 </div>
 @endsection
-

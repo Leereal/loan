@@ -2,7 +2,6 @@
 
 namespace App\Utilities;
 
-use App\Models\LoanProduct;
 use App\Traits\CalculateInterest;
 
 class LoanCalculator {
@@ -11,7 +10,6 @@ class LoanCalculator {
     public $payable_amount;
     private $apply_amount;
     private $admin_fee;
-    private $service_fee;
     private $cash_out;
     private $first_payment_date;
     private $interest_rate;
@@ -19,19 +17,15 @@ class LoanCalculator {
     private $term_period;    
     private $ceil_factor;
 
-    public function __construct($apply_amount, $first_payment_date, $cash_out,$loan_product_id) {
-         
+    public function __construct($apply_amount, $first_payment_date, $interest_rate, $term, $term_period, $cash_out, $admin_fee,$ceil_factor) {
         $this->apply_amount           = $apply_amount;
         $this->cash_out               = $cash_out;
+        $this->admin_fee              = $admin_fee;
         $this->first_payment_date     = $first_payment_date;
-
-        $loan_product = LoanProduct::find($loan_product_id);  
-        $this->admin_fee              = $loan_product->admin_fee;    
-        $this->service_fee            = 5;//$loan_product->service_fee;     
-        $this->interest_rate          = $loan_product->interest_rate;
-        $this->term                   = $loan_product->term;
-        $this->term_period            = $loan_product->term_period;       
-        $this->ceil_factor            = $loan_product->ceil_factor;
+        $this->interest_rate          = $interest_rate;
+        $this->term                   = $term;
+        $this->term_period            = $term_period;       
+        $this->ceil_factor            = $ceil_factor;
         $this->late_payment_penalties = 0;
     }
 
@@ -61,11 +55,11 @@ class LoanCalculator {
     }
 
     public function get_flat_rate() {
-        $this->payable_amount = (($this->interest_rate / 100) * $this->apply_amount) + $this->apply_amount + $this->service_fee; //Added because of BSFinance
+        $this->payable_amount = (($this->interest_rate / 100) * $this->apply_amount) + $this->apply_amount;
 
         $date             = $this->first_payment_date;
         $principle_amount = $this->apply_amount / $this->term;
-        $amount_to_pay    = $principle_amount + (($this->interest_rate / 100) * $principle_amount) + ($this->service_fee/$this->term);
+        $amount_to_pay    = $principle_amount + (($this->interest_rate / 100) * $principle_amount);
         $interest         = (($this->interest_rate / 100) * $this->apply_amount) / $this->term;
         $balance          = $this->payable_amount;
         $penalty          = (($this->late_payment_penalties / 100) * $this->apply_amount);

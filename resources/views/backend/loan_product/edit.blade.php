@@ -8,42 +8,48 @@
 				<span class="panel-title">{{ _lang('Update Loan Product') }}</span>
 			</div>
 			<div class="card-body">
-				<form method="post" class="validate" autocomplete="off" action="{{ action('LoanProductController@update', $id) }}" enctype="multipart/form-data">
+				<form method="post" class="validate" autocomplete="off"
+					action="{{ action('LoanProductController@update', $id) }}" enctype="multipart/form-data">
 					{{ csrf_field()}}
 					<input name="_method" type="hidden" value="PATCH">
 					<div class="row">
 						<div class="col-md-12">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Name') }}</label>
-								<input type="text" class="form-control" name="name" value="{{ $loanproduct->name }}" required>
+								<input type="text" class="form-control" name="name" value="{{ $loanproduct->name }}"
+									required>
 							</div>
 						</div>
 
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Minimum Amount').' '.currency() }}</label>
-								<input type="text" class="form-control float-field" name="minimum_amount" value="{{ $loanproduct->minimum_amount }}" required>
+								<input type="text" class="form-control float-field" name="minimum_amount"
+									value="{{ $loanproduct->minimum_amount }}" required>
 							</div>
 						</div>
 
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Maximum Amount').' '.currency() }}</label>
-								<input type="text" class="form-control float-field" name="maximum_amount" value="{{ $loanproduct->maximum_amount }}" required>
+								<input type="text" class="form-control float-field" name="maximum_amount"
+									value="{{ $loanproduct->maximum_amount }}" required>
 							</div>
 						</div>
 
 						<div class="col-md-6">
 							<div class="form-group">
-								<label class="control-label">{{ _lang('Interest Rate Per Year') }}</label>
-								<input type="text" class="form-control float-field" name="interest_rate" value="{{ $loanproduct->interest_rate }}" required>
+								<label class="control-label">{{ _lang('Interest Rate') }}</label>
+								<input type="text" class="form-control float-field" name="interest_rate"
+									value="{{ $loanproduct->interest_rate }}" required>
 							</div>
 						</div>
 
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Interest Type') }}</label>
-								<select class="form-control auto-select" data-selected="{{ $loanproduct->interest_type }}" name="interest_type" required>
+								<select class="form-control auto-select"
+									data-selected="{{ $loanproduct->interest_type }}" name="interest_type" required>
 									<option value="compound_rate">{{ _lang('Compound Rate') }}</option>
 									<option value="flat_rate">{{ _lang('Flat Rate') }}</option>
 									<option value="fixed_rate">{{ _lang('Fixed Rate') }}</option>
@@ -53,32 +59,36 @@
 							</div>
 						</div>
 
-						
+
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Admin Fee (%)') }}</label>
-								<input type="text" class="form-control float-field" name="admin_fee" value="{{ $loanproduct->admin_fee }}">
+								<input type="text" class="form-control float-field" name="admin_fee"
+									value="{{ $loanproduct->admin_fee }}">
 							</div>
 						</div>
 
 						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Penalty Fee (%)') }}</label>
-								<input type="text" class="form-control float-field" name="penalty_fee" value="{{ $loanproduct->penalty_fee }}">
+								<input type="text" class="form-control float-field" name="penalty_fee"
+									value="{{ $loanproduct->penalty_fee }}">
 							</div>
 						</div>
 
 						<div class="col-md-4">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Term') }}</label>
-								<input type="number" class="form-control" name="term" value="{{ $loanproduct->term }}" required>
+								<input type="number" class="form-control" name="term" value="{{ $loanproduct->term }}"
+									required>
 							</div>
 						</div>
 
 						<div class="col-md-4">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Term Period') }}</label>
-								<select class="form-control auto-select" data-selected="{{ $loanproduct->term_period }}" name="term_period" id="term_period" required>
+								<select class="form-control auto-select" data-selected="{{ $loanproduct->term_period }}"
+									name="term_period" id="term_period" required>
 									<option value="">{{ _lang('Select One') }}</option>
 									<option value="+1 day">{{ _lang('Day') }}</option>
 									<option value="+1 week">{{ _lang('Week') }}</option>
@@ -90,15 +100,18 @@
 
 						<div class="col-md-4">
 							<div class="form-group">
-								<label class="control-label">{{ _lang('Round Up Factor') }} <small class="text-danger">Do not insert 0</small></label>
-								<input type="number" class="form-control" name="ceil_factor" value="{{ $loanproduct->ceil_factor }}">
+								<label class="control-label">{{ _lang('Round Up Factor') }} <small
+										class="text-danger">Do not insert 0</small></label>
+								<input type="number" class="form-control" name="ceil_factor"
+									value="{{ $loanproduct->ceil_factor }}">
 							</div>
 						</div>
 
 						<div class="col-md-12">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Status') }}</label>
-								<select class="form-control auto-select" data-selected="{{ $loanproduct->status }}" name="status" required>
+								<select class="form-control auto-select" data-selected="{{ $loanproduct->status }}"
+									name="status" required>
 									<option value="">{{ _lang('Select One') }}</option>
 									<option value="1">{{ _lang('Active') }}</option>
 									<option value="0">{{ _lang('Deactivate') }}</option>
@@ -109,14 +122,16 @@
 						<div class="col-md-12">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Description') }}</label>
-								<textarea class="form-control" name="description">{{ $loanproduct->description }}</textarea>
+								<textarea class="form-control"
+									name="description">{{ $loanproduct->description }}</textarea>
 							</div>
 						</div>
 
 
 						<div class="col-md-12">
 							<div class="form-group">
-								<button type="submit" class="btn btn-primary"><i class="icofont-check-circled"></i> {{ _lang('Update Changes') }}</button>
+								<button type="submit" class="btn btn-primary"><i class="icofont-check-circled"></i> {{
+									_lang('Update Changes') }}</button>
 							</div>
 						</div>
 					</div>
@@ -127,5 +142,3 @@
 </div>
 
 @endsection
-
-

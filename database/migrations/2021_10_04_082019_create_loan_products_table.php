@@ -19,6 +19,7 @@ class CreateLoanProductsTable extends Migration {
             $table->text('description')->nullable();
             $table->decimal('interest_rate', 10, 2);
             $table->decimal('admin_fee', 10, 2);
+            $table->decimal('service_fee', 10, 2)->nullable();
             $table->decimal('penalty_fee', 10, 2); 
             $table->decimal('ceil_factor', 10, 2); 
             $table->string('interest_type');
