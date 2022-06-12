@@ -25,7 +25,8 @@ class TransactionController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('backend.transactions.list');
+        $transactions = Transaction::select('type','note')->distinct()->get();    
+        return view('backend.transactions.list', compact('transactions'));
     }
 
     public function get_table_data(Request $request) {
@@ -45,6 +46,11 @@ class TransactionController extends Controller {
                 if ($request->has('type')) {
                     $query->where('type', $request->type);
                 }
+                if ($request->has('from_date') && $request->has('to_date') ) {                
+                    $query ->whereDate('created_at', '>=', date($request->from_date));
+                    $query->whereDate('created_at', '<=', date($request->to_date));
+                }
+               
             }, true)
             ->editColumn('user.name', function ($transaction) {
                 return '<b>' . $transaction->user->name . ' </b><br>' . $transaction->user->email;

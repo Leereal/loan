@@ -32,6 +32,15 @@ class RegistersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {   
+
+        $registers = DB::table('loan_products')
+        ->join('loans', 'loan_products.id', '=', 'loans.loan_product_id')
+        ->select('loan_products.id','name', 'interest_rate','branch_id', DB::raw('SUM(loans.applied_amount) AS disbursements,SUM(loans.total_paid) AS repayments,COUNT(loans.id) as total_loans'))
+        ->whereNotIn('loans.status',[0,3,2])
+        ->groupBy('name')
+        ->orderBy('name')
+        ->get();
+        dd($registers->toArray());
         $currencies     = Currency::all();
         $branches         = Branch::all();
         $ages            = ["Current","1 Month","2 Months","3 Months","3 to < 6 Months","6 to 12 Months","+1 Year"];
