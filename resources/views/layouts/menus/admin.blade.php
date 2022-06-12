@@ -80,17 +80,11 @@
 </a>
 <div class="collapse" id="reports" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 	<nav class="sb-sidenav-menu-nested nav">
+		<a class="nav-link" href="{{ route('transactions.index') }}">{{ _lang('All Transactions') }}</a>
 		<a class="nav-link" href="{{ route('registers.index') }}">{{ _lang('Registers Summary') }}</a>
 		<a class="nav-link" href="{{ route('registers.view') }}">{{ _lang('Registers') }}</a>
 	</nav>
 </div>
-
-<a class="nav-link" href="{{ route('transactions.index') }}">
-	<div class="sb-nav-link-icon"><i class="icofont-listing-number"></i></div>
-	{{ _lang('All Transactions') }}
-</a>
-
-
 {{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#fdr" aria-expanded="false"
 	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-money"></i></div>

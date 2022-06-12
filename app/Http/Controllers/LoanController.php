@@ -302,7 +302,7 @@ class LoanController extends Controller {
         $transaction->type            = 'Loan';
         $transaction->method          = 'Manual';
         $transaction->status          = 2;
-        $transaction->note            = 'Loan Approved';
+        $transaction->note            = 'Loan Disbursement';
         $transaction->loan_id         = $loan->id;
         $transaction->ip_address      = request()->ip();
         $transaction->created_user_id = auth()->id();
