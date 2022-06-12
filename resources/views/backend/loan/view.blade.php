@@ -12,30 +12,26 @@
             <ul class="nav nav-tabs">
                <li class="nav-item">
                   <a class="nav-link active" data-toggle="tab" href="#loan_details">{{
-                  _lang("Loan Details")
-                  }}</a>
+                     _lang("Loan Details")
+                     }}</a>
                </li>
                <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#collateral">{{
-                  _lang("Collateral")
-                  }}</a>
+                     _lang("Collateral")
+                     }}</a>
                </li>
                <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#schedule">{{
-                  _lang("Repayments Schedule")
-                  }}</a>
+                     _lang("Repayments Schedule")
+                     }}</a>
                </li>
                <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" href="#repayments">{{
-                  _lang("Repayments")
-                  }}</a>
+                     _lang("Repayments")
+                     }}</a>
                </li>
                <li class="nav-item">
-                  <a
-                     class="nav-link"
-                     href="{{ action('LoanController@edit', $loan['id']) }}"
-                     >{{ _lang("Edit") }}</a
-                     >
+                  <a class="nav-link" href="{{ action('LoanController@edit', $loan['id']) }}">{{ _lang("Edit") }}</a>
                </li>
             </ul>
             <!-- Tab panes -->
@@ -64,20 +60,23 @@
                      <tr>
                         <td>{{ _lang("Status") }}</td>
                         <td>
-                            @if($loan->status == 0)
-                                {!! xss_clean(show_status(_lang('Pending'), 'warning')) !!}
-                            @elseif($loan->status == 1)
-                                {!! xss_clean(show_status(_lang('Approved'), 'success')) !!}
-                            @elseif($loan->status == 2)
-                                {!! xss_clean(show_status(_lang('Completed'), 'info')) !!}
-                            @elseif($loan->status == 3)
-                                {!! xss_clean(show_status(_lang('Cancelled'), 'danger')) !!}
-                            @endif
+                           @if($loan->status == 0)
+                           {!! xss_clean(show_status(_lang('Pending'), 'warning')) !!}
+                           @elseif($loan->status == 1)
+                           {!! xss_clean(show_status(_lang('Approved'), 'success')) !!}
+                           @elseif($loan->status == 2)
+                           {!! xss_clean(show_status(_lang('Completed'), 'info')) !!}
+                           @elseif($loan->status == 3)
+                           {!! xss_clean(show_status(_lang('Cancelled'), 'danger')) !!}
+                           @endif
 
                            @if($loan->status == 0)
-                           <a class="btn btn-outline-primary btn-sm" href="{{ action('LoanController@approve', $loan['id']) }}"><i class="icofont-check-circled"></i> {{ _lang("Click to Approve") }}</a
-                              >
-                           <a class="btn btn-outline-danger btn-sm float-right" href="{{ action('LoanController@reject', $loan['id']) }}"><i class="icofont-close-line-circled"></i> {{ _lang("Click to Reject") }}</a>
+                           <a class="btn btn-outline-primary btn-sm"
+                              href="{{ action('LoanController@approve', $loan['id']) }}"><i
+                                 class="icofont-check-circled"></i> {{ _lang("Click to Approve") }}</a>
+                           <a class="btn btn-outline-danger btn-sm float-right"
+                              href="{{ action('LoanController@reject', $loan['id']) }}"><i
+                                 class="icofont-close-line-circled"></i> {{ _lang("Click to Reject") }}</a>
                            @endif
                         </td>
                      </tr>
@@ -117,16 +116,13 @@
                      </tr>
                      <tr>
                         <td>{{ _lang("Admin Fee") }}</td>
-                        <td>{{ $loan->admin_fee }} %</td>
+                        <td>{{ decimalPlace($loan->admin_fee,$loan->currency->name) }}</td>
                      </tr>
                      <tr>
                         <td>{{ _lang("Attachment") }}</td>
                         <td>
-                           {!! $loan->attachment == "" ? '' : '<a
-                              href="'.asset('uploads/media/'.$loan->attachment).'"
-                              target="_blank"
-                              >'._lang('Download').'</a
-                              >' !!}
+                           {!! $loan->attachment == "" ? '' : '<a href="'.asset('uploads/media/'.$loan->attachment).'"
+                              target="_blank">'._lang('Download').'</a>' !!}
                         </td>
                      </tr>
                      @if($loan->status == 1)
@@ -153,12 +149,10 @@
                   <div class="card">
                      <div class="card-header d-flex align-items-center">
                         <span>{{ _lang("All Collaterals") }}</span>
-                        <a
-                           class="btn btn-primary btn-sm ml-auto"
-                           href="{{ route('loan_collaterals.create',['loan_id' => $loan->id]) }}"
-                           ><i class="icofont-plus-circle"></i>
-                        {{ _lang("Add New Collateral") }}</a
-                           >
+                        <a class="btn btn-primary btn-sm ml-auto"
+                           href="{{ route('loan_collaterals.create',['loan_id' => $loan->id]) }}"><i
+                              class="icofont-plus-circle"></i>
+                           {{ _lang("Add New Collateral") }}</a>
                      </div>
                      <div class="card-body">
                         <div class="table-responsive">
@@ -183,71 +177,46 @@
                                        {{ $loancollateral->serial_number }}
                                     </td>
                                     <td class="estimated_price">
-                                       {{ decimalPlace($loancollateral->estimated_price, currency($loan->currency->name)) }}
+                                       {{ decimalPlace($loancollateral->estimated_price,
+                                       currency($loan->currency->name)) }}
                                     </td>
                                     <td class="text-center">
                                        <div class="dropdown">
-                                          <button
-                                             class="btn btn-primary dropdown-toggle btn-sm"
-                                             type="button"
-                                             id="dropdownMenuButton"
-                                             data-toggle="dropdown"
-                                             aria-haspopup="true"
-                                             aria-expanded="false"
-                                             >
-                                          {{ _lang("Action") }}
+                                          <button class="btn btn-primary dropdown-toggle btn-sm" type="button"
+                                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                             aria-expanded="false">
+                                             {{ _lang("Action") }}
                                           </button>
-                                          <form
-                                             action="{{
+                                          <form action="{{
                                              action(
                                              'LoanCollateralController@destroy',
                                              $loancollateral['id']
                                              )
-                                             }}"
-                                             method="post"
-                                             >
+                                             }}" method="post">
                                              {{ csrf_field() }}
-                                             <input
-                                                name="_method"
-                                                type="hidden"
-                                                value="DELETE"
-                                                />
-                                             <div
-                                                class="dropdown-menu"
-                                                aria-labelledby="dropdownMenuButton"
-                                                >
-                                                <a
-                                                   href="{{
+                                             <input name="_method" type="hidden" value="DELETE" />
+                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a href="{{
                                                    action(
                                                    'LoanCollateralController@edit',
                                                    $loancollateral['id']
                                                    )
-                                                   }}"
-                                                   class="
+                                                   }}" class="
                                                    dropdown-item dropdown-edit dropdown-edit
-                                                   "
-                                                   ><i class="mdi mdi-pencil"></i>
-                                                {{ _lang("Edit") }}</a
-                                                   >
-                                                <a
-                                                   href="{{
+                                                   "><i class="mdi mdi-pencil"></i>
+                                                   {{ _lang("Edit") }}</a>
+                                                <a href="{{
                                                    action(
                                                    'LoanCollateralController@show',
                                                    $loancollateral['id']
                                                    )
-                                                   }}"
-                                                   class="
+                                                   }}" class="
                                                    dropdown-item dropdown-view dropdown-view
-                                                   "
-                                                   ><i class="mdi mdi-eye"></i>
-                                                {{ _lang("View") }}</a
-                                                   >
-                                                <button
-                                                   class="btn-remove dropdown-item"
-                                                   type="submit"
-                                                   >
-                                                <i class="mdi mdi-delete"></i>
-                                                {{ _lang("Delete") }}
+                                                   "><i class="mdi mdi-eye"></i>
+                                                   {{ _lang("View") }}</a>
+                                                <button class="btn-remove dropdown-item" type="submit">
+                                                   <i class="mdi mdi-delete"></i>
+                                                   {{ _lang("Delete") }}
                                                 </button>
                                              </div>
                                           </form>

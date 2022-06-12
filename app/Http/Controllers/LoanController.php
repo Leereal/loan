@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Loan;
 use App\Models\LoanCollateral;
 use App\Models\LoanPayment;
+use App\Models\LoanProduct;
 use App\Models\LoanRepayment;
+use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\WithdrawMethod;
 use App\Notifications\ApprovedLoanRequest;
@@ -15,6 +17,7 @@ use Auth;
 use DataTables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -145,6 +148,7 @@ class LoanController extends Controller {
             $attachment = time() . $file->getClientOriginalName();
             $file->move(public_path() . "/uploads/media/", $attachment);
         }
+        $loan_product = LoanProduct::find($request->loan_product_id);
 
         DB::beginTransaction();
 
@@ -158,7 +162,9 @@ class LoanController extends Controller {
         $loan->release_date           = $request->input('release_date');
         $loan->applied_amount         = $request->input('applied_amount');
         $loan->cash_out               = $request->input('cash_out');  
-        $loan->admin_fee              = $loan->applied_amount - $loan->cash_out;      
+        // $loan->admin_fee              = $loan->applied_amount - $loan->cash_out;   
+        $loan->admin_fee              = $loan->applied_amount * $loan_product->admin_fee/100;
+        $loan->service_fee            = $loan_product->service_fee;      
         $loan->attachment             = $attachment;
         $loan->description            = $request->input('description');
         $loan->remarks                = $request->input('remarks');
@@ -172,17 +178,13 @@ class LoanController extends Controller {
         $calculator = new Calculator(
             $loan->applied_amount,
             $loan->first_payment_date,
-            $loan->loan_product->interest_rate,
-            $loan->loan_product->term,
-            $loan->loan_product->term_period,           
             $loan->cash_out,
-            $loan->loan_product->admin_fee,
-            $loan->loan_product->ceil_factor,
+            $request->loan_product_id
         );
         if ($loan->loan_product->interest_type == 'compound_rate') {
             $repayments = $calculator->get_compound_rate();
         }else if ($loan->loan_product->interest_type == 'flat_rate') {
-            $repayments = $calculator->get_flat_rate();
+            $repayments = $calculator->get_flat_rate();   
         } else if ($loan->loan_product->interest_type == 'fixed_rate') {
             $repayments = $calculator->get_fixed_rate();
         } else if ($loan->loan_product->interest_type == 'mortgage') {
@@ -191,7 +193,8 @@ class LoanController extends Controller {
             $repayments = $calculator->get_one_time();
         }
 
-        $loan->total_payable = $calculator->payable_amount;
+        $loan->total_payable = ceil_amount($calculator->payable_amount,$loan_product->ceil_factor); 
+
         $loan->save();
 
         DB::commit();
@@ -246,7 +249,7 @@ class LoanController extends Controller {
         }
 
         if ($loan->loan_id == NULL || $loan->release_date == NULL) {
-            return back()->with('error', _lang('Loan ID and Release date must required !'));
+            return back()->with('error', _lang('Loan ID and Release date are required !'));
         }
 
         $loan->status           = 1;
@@ -257,14 +260,10 @@ class LoanController extends Controller {
         // Create Loan Repayments
         $calculator = new Calculator(
             $loan->applied_amount,
-            $loan->getRawOriginal('first_payment_date'),
-            $loan->loan_product->interest_rate,
-            $loan->loan_product->term,
-            $loan->loan_product->term_period,
+            $loan->getRawOriginal('first_payment_date'),         
             $loan->cash_out,
-            $loan->loan_product->admin_fee,
-            $loan->loan_product->ceil_factor               
-        );        
+            $loan->loan_product->id          
+        );  
 
         if ($loan->loan_product->interest_type == 'compound_rate') {
             $repayments = $calculator->get_compound_rate();
@@ -278,7 +277,7 @@ class LoanController extends Controller {
             $repayments = $calculator->get_one_time();
         }
 
-        $loan->total_payable = $calculator->payable_amount;
+        $loan->total_payable = ceil_amount($calculator->payable_amount,$loan->loan_product->ceil_factor);
         $loan->save();
 
         foreach ($repayments as $repayment) {
@@ -294,16 +293,32 @@ class LoanController extends Controller {
             $loan_repayment->save();
         }
 
-        //Create Transaction
+        //Create Transaction for disbursement
         $transaction                  = new Transaction();
         $transaction->user_id         = $loan->borrower_id;
         $transaction->currency_id     = $loan->currency_id;
-        $transaction->amount          = $loan->applied_amount;
+        $transaction->amount          = $loan->cash_out; //Changed from applied_amount because we are calculating amount 
         $transaction->dr_cr           = 'cr';
         $transaction->type            = 'Loan';
         $transaction->method          = 'Manual';
         $transaction->status          = 2;
         $transaction->note            = 'Loan Approved';
+        $transaction->loan_id         = $loan->id;
+        $transaction->ip_address      = request()->ip();
+        $transaction->created_user_id = auth()->id();
+
+        $transaction->save();
+
+        //Create Transaction for Admin Fee
+        $transaction                  = new Transaction();
+        $transaction->user_id         = $loan->borrower_id;
+        $transaction->currency_id     = $loan->currency_id;
+        $transaction->amount          = $loan->admin_fee; //From loan approved
+        $transaction->dr_cr           = 'dr';
+        $transaction->type            = 'Admin_Fee';
+        $transaction->method          = 'Manual';
+        $transaction->status          = 2;
+        $transaction->note            = 'Admin Fee Payment';
         $transaction->loan_id         = $loan->id;
         $transaction->ip_address      = request()->ip();
         $transaction->created_user_id = auth()->id();
@@ -414,20 +429,21 @@ class LoanController extends Controller {
         }
 
         
-        $loan->loan_product_id        = $request->input('loan_product_id');
-        $loan->borrower_id            = $request->input('borrower_id');
-        $loan->currency_id            = $request->input('currency_id');
-        $loan->withdraw_method_id     = $request->input('withdraw_method_id');
-        $loan->first_payment_date     = $request->input('first_payment_date');
-        $loan->release_date           = $request->input('release_date');
-        $loan->applied_amount         = $request->input('applied_amount');
-        $loan->cash_out               = $request->input('cash_out');  
-        $loan->admin_fee              = $loan->applied_amount - $loan->cash_out;      
-        $loan->attachment             = $attachment;
-        $loan->description            = $request->input('description');
-        $loan->remarks                = $request->input('remarks');
-        $loan->created_user_id        = Auth::id();
-        $loan->branch_id              = auth()->user()->branch_id;
+        // $loan->loan_product_id        = $request->input('loan_product_id');
+        // $loan->borrower_id            = $request->input('borrower_id');
+        // $loan->currency_id            = $request->input('currency_id');
+        // $loan->withdraw_method_id     = $request->input('withdraw_method_id');
+        // $loan->first_payment_date     = $request->input('first_payment_date');
+        // $loan->release_date           = $request->input('release_date');
+        // $loan->applied_amount         = $request->input('applied_amount');
+        // $loan->cash_out               = $request->input('cash_out');  
+        // $loan->admin_fee              = $loan->applied_amount * $loan_product->admin_fee/100;    
+        // $loan->attachment             = $attachment;
+        // $loan->description            = $request->input('description');
+        // $loan->remarks                = $request->input('remarks');
+        // $loan->created_user_id        = Auth::id();
+        // $loan->branch_id              = auth()->user()->branch_id;
+        $loan_product = LoanProduct::find($request->loan_product_id);
 
         DB::beginTransaction();
 
@@ -440,7 +456,7 @@ class LoanController extends Controller {
         $loan->release_date           = $request->input('release_date');
         $loan->applied_amount         = $request->input('applied_amount');
         $loan->cash_out               = $request->input('cash_out');  
-        $loan->admin_fee              = $loan->applied_amount - $loan->cash_out;   
+        $loan->admin_fee              = $loan->applied_amount * $loan_product->admin_fee/100; 
         if ($request->hasfile('attachment')) {
             $loan->attachment = $attachment;
         }
@@ -453,12 +469,8 @@ class LoanController extends Controller {
         $calculator = new Calculator(
             $loan->applied_amount,
             $loan->first_payment_date,
-            $loan->loan_product->interest_rate,
-            $loan->loan_product->term,
-            $loan->loan_product->term_period,
             $loan->cash_out,
-            $loan->loan_product->admin_fee,
-            $loan->loan_product->ceil_factor,
+            $request->loan_product_id
         );
 
         if ($loan->loan_product->interest_type == 'flat_rate') {
@@ -471,7 +483,7 @@ class LoanController extends Controller {
             $repayments = $calculator->get_one_time();
         }
 
-        $loan->total_payable = $calculator->payable_amount;
+        $loan->total_payable = ceil_amount($calculator->payable_amount,$loan_product->ceil_factor);
         $loan->save();
 
         DB::commit();
@@ -620,12 +632,12 @@ class LoanController extends Controller {
             
             DB::beginTransaction();
 
-            $loan      = Loan::where('id', $loan_id)->where('borrower_id', $request->client_id)->first();
-            $repayment = $loan->next_payment;
+            $loan      = Loan::where('id', $loan_id)->where('borrower_id', $request->client_id)->first();        
+            $repayment = $loan->next_payment;      
 
             //Create Transaction
             // $penalty = date('Y-m-d') > $repayment->repayment_date ? $repayment->penalty : 0;
-            $amount  = $repayment->amount_to_pay;
+            $amount  = $request->amount_to_pay;
             //$amount      = convert_currency(account_currency($loan->account_id), account_currency($request->account_id), $base_amount);
 
             //Create Debit Transactions
