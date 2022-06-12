@@ -27,7 +27,7 @@ class LoanCalculator {
 
         $loan_product = LoanProduct::find($loan_product_id);  
         $this->admin_fee              = $loan_product->admin_fee;    
-        $this->service_fee            = 5;//$loan_product->service_fee;     
+        $this->service_fee            = $loan_product->service_fee;     
         $this->interest_rate          = $loan_product->interest_rate;
         $this->term                   = $loan_product->term;
         $this->term_period            = $loan_product->term_period;       

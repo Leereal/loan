@@ -78,6 +78,7 @@ class LoanProductController extends Controller {
         $loanproduct->description    = $request->input('description');
         $loanproduct->interest_rate  = $request->input('interest_rate');
         $loanproduct->admin_fee      = $request->input('admin_fee');
+        $loanproduct->service_fee    = $request->input('service_fee');
         $loanproduct->penalty_fee    = $request->input('penalty_fee');
         $loanproduct->interest_type  = $request->input('interest_type');
         $loanproduct->ceil_factor    = $request->input('ceil_factor');
@@ -171,6 +172,7 @@ class LoanProductController extends Controller {
         $loanproduct->description    = $request->input('description');
         $loanproduct->interest_rate  = $request->input('interest_rate');
         $loanproduct->admin_fee      = $request->input('admin_fee');
+        $loanproduct->service_fee    = $request->input('service_fee');
         $loanproduct->penalty_fee    = $request->input('penalty_fee');
         $loanproduct->interest_type  = $request->input('interest_type');
         $loanproduct->ceil_factor    = $request->input('ceil_factor');

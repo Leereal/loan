@@ -60,7 +60,7 @@
 						</div>
 
 
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Admin Fee (%)') }}</label>
 								<input type="text" class="form-control float-field" name="admin_fee"
@@ -68,7 +68,15 @@
 							</div>
 						</div>
 
-						<div class="col-md-6">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="control-label">{{ _lang('Service Fee (USD$)') }}</label>
+								<input type="text" class="form-control float-field" name="service_fee"
+									value="{{ $loanproduct->service_fee }}">
+							</div>
+						</div>
+
+						<div class="col-md-4">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Penalty Fee (%)') }}</label>
 								<input type="text" class="form-control float-field" name="penalty_fee"
