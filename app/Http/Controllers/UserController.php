@@ -123,8 +123,10 @@ class UserController extends Controller {
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
             'name'            => 'required|max:255',
+            'title'            => 'required|max:255',
             'email'           => 'nullable|email|unique:users|max:255',
             'branch_id'       => 'required',
+            'file_number'       => 'required',
             'status'          => 'required',
             'id_number'          => 'required',
             'address'          => 'required',
@@ -149,12 +151,14 @@ class UserController extends Controller {
         }
 
         $user                    = new User();
+        $user->title              = $request->input('title');
         $user->name              = $request->input('name');
         $user->email             = $request->input('email');
         $user->country_code      = $request->input('country_code');
         $user->phone             = $request->input('phone');
         $user->address             = $request->input('address');
         $user->id_number             = $request->input('id_number');
+        $user->file_number             = $request->input('file_number');
         $user->user_type         = 'customer';
         $user->branch_id         = $request->branch_id;
         $user->status            = $request->input('status');
@@ -229,6 +233,8 @@ class UserController extends Controller {
     public function update(Request $request, $id) {
         $validator = Validator::make($request->all(), [
             'name'            => 'required|max:255',
+            'title'            => 'required|max:255',
+            'file_number'       => 'required',
             'email'           => [
                 'required',
                 'email',
@@ -259,6 +265,7 @@ class UserController extends Controller {
         }
 
         $user               = User::find($id);
+        $user->title              = $request->input('title');
         $user->name         = $request->input('name');
         $user->email        = $request->input('email');
         $user->country_code = $request->input('country_code');
@@ -266,6 +273,7 @@ class UserController extends Controller {
         $user->status       = $request->input('status');
         $user->address      = $request->input('address');
         $user->id_number    = $request->input('id_number');
+        $user->file_number             = $request->input('file_number');
         $user->branch_id    = $request->branch_id;
         if ($request->hasfile('profile_picture')) {
             $user->profile_picture = $profile_picture;

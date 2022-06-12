@@ -16,6 +16,26 @@
                     <div class="row">
                         <div class="col-md-8 col-sm-12">
                             <div class="form-group row">
+                                <label class="col-xl-3 col-form-label">{{ _lang('File Number') }}</label>
+                                <div class="col-xl-9">
+                                    <input type="text" class="form-control" name="file_number"
+                                        value="{{ old('file_number') }}" required>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-form-label">{{ _lang('Title') }}</label>
+                                <div class="col-xl-9">
+                                    <select class="form-control auto-select" data-selected="{{ old('title') }}"
+                                        name="title" required>
+                                        <option value="Mr">Mr</option>
+                                        <option value="Mrs">Mrs</option>
+                                        <option value="Miss">Miss</option>
+                                        <option value="Ms">Ms</option>
+                                        <option value="Dr">Dr</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-xl-3 col-form-label">{{ _lang('Full Name') }}</label>
                                 <div class="col-xl-9">
                                     <input type="text" class="form-control" name="name" value="{{ old('name') }}"

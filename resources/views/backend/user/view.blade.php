@@ -9,9 +9,9 @@
             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#transactions"><i
                         class="icofont-listine-dots"></i>{{ _lang('Transactions') }}</a></li>
             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#add_money"><i
-                        class="icofont-plus-circle"></i> {{ _lang('Add Money') }}</a></li>
+                        class="icofont-plus-circle"></i> {{ _lang('Add Charge') }}</a></li>
             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#deduct_money"><i
-                        class="icofont-minus-circle"></i> {{ _lang('Deduct Money') }}</a></li>
+                        class="icofont-minus-circle"></i> {{ _lang('Refund') }}</a></li>
             <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#my_loans"><i class="icofont-bank"></i> {{
                     _lang('Loans') }}</a></li>
             {{-- <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#my_fdr"><i class="icofont-money"></i>
@@ -370,7 +370,6 @@
                                     <th>{{ _lang('Date') }}</th>
                                     <th>{{ _lang('Currency') }}</th>
                                     <th>{{ _lang('Amount') }}</th>
-                                    <th>{{ _lang('Charge') }}</th>
                                     <th>{{ _lang('Grand Total') }}</th>
                                     <th>{{ _lang('DR/CR') }}</th>
                                     <th>{{ _lang('Type') }}</th>
@@ -394,9 +393,6 @@
                                     <td>{{ decimalPlace(($transaction->amount + $transaction->fee),
                                         currency($transaction->currency->name)) }}</td>
                                     @endif
-                                    <td>{{ $transaction->dr_cr == 'dr' ? '+ '.decimalPlace($transaction->fee,
-                                        currency($transaction->currency->name)) : '- '.decimalPlace($transaction->fee,
-                                        currency($transaction->currency->name)) }}</td>
                                     <td><span class="{{ $class }}">{{ $symbol.' '.decimalPlace($transaction->amount,
                                             currency($transaction->currency->name)) }}</span></td>
                                     <td>{{ strtoupper($transaction->dr_cr) }}</td>
@@ -418,19 +414,19 @@
             <div id="add_money" class="tab-pane">
                 <div class="card">
                     <div class="card-header">
-                        <span class="header-title">{{ _lang('Add Money') }}</span>
+                        <span class="header-title">{{ _lang('Add Charge') }}</span>
                     </div>
 
                     <div class="card-body">
                         {{-- <form method="post" class="validate" autocomplete="off"
-                            action="{{ route('deposits.store') }}" enctype="multipart/form-data"> --}}
-                            {{ csrf_field() }}
+                            action="{{ route('loans.add_charge') }}" enctype="multipart/form-data">
+                            {{ csrf_field() }} --}}
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="control-label">{{ _lang('Client Email') }}</label>
-                                        <input type="email" class="form-control" name="user_email"
-                                            value="{{ $user->email }}" required="" readonly>
+                                        <label class="control-label">{{ _lang('Client ID Number') }}</label>
+                                        <input type="email" class="form-control" name="id_number"
+                                            value="{{ $user->id_number }}" required="" readonly>
                                     </div>
                                 </div>
 
@@ -476,19 +472,19 @@
             <div id="deduct_money" class="tab-pane">
                 <div class="card">
                     <div class="card-header">
-                        <span class="header-title">{{ _lang('Deduct Money') }}</span>
+                        <span class="header-title">{{ _lang('Refund') }}</span>
                     </div>
 
                     <div class="card-body">
-                        {{-- <form method="post" class="validate" autocomplete="off"
-                            action="{{ route('withdraw.store') }}" enctype="multipart/form-data"> --}}
+                        {{-- <form method="post" class="validate" autocomplete="off" action="{{ route('loan.refund') }}"
+                            enctype="multipart/form-data"> --}}
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label class="control-label">{{ _lang('Client Email') }}</label>
-                                        <input type="email" class="form-control" name="user_email"
-                                            value="{{ $user->email }}" required="" readonly>
+                                        <label class="control-label">{{ _lang('Client ID Number') }}</label>
+                                        <input type="email" class="form-control" name="id_number"
+                                            value="{{ $user->id_number }}" required="" readonly>
                                     </div>
                                 </div>
 
