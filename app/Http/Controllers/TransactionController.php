@@ -53,7 +53,7 @@ class TransactionController extends Controller {
                
             }, true)
             ->editColumn('user.name', function ($transaction) {
-                return '<b>' . $transaction->user->name . ' </b><br>' . $transaction->user->email;
+                return '<b>' . $transaction->user->name . ' </b><br> ID: ' . $transaction->user->id_number;
             })
             ->editColumn('amount', function ($transaction) {
                 $symbol = $transaction->dr_cr == 'cr' ? '-' : '+';
