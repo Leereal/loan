@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder {
         //     // BranchSeeder::class,
         //     // WithdrawMethodSeeder::class,            
         // ]);
-        \App\Models\User::factory(20)->create();
+        \App\Models\User::factory(1)->create();
         // \App\Models\Loan::factory(500)->create();
         // \App\Models\LoanCollateral::factory(100)->create();
         // \App\Models\Transaction::factory(800)->create();

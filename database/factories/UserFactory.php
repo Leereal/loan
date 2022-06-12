@@ -21,14 +21,15 @@ class UserFactory extends Factory
         return [
         'name' => $this->faker->name,
         'id_number' => $this->faker->ssn,
+        'title' => $this->faker->title,
         'address' => $this->faker->address,
-        'email' => $this->faker->unique()->safeEmail,//"leereal08@ymail.com"
+        'email' => "leereal08@ymail.com",
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'remember_token' => $this->faker->text($maxNbChars = 50),
-        'branch_id'=>$this->faker->numberBetween(1, 7),
+        'branch_id'=>1,
         'status' => 1,
-        'user_type' => "customer",//"admin",
+        'user_type' =>"admin",
         'sms_verified_at' => now(),
         'country_code' => "+27",
         'ip_address' => '127.0.0.1'
