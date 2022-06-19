@@ -69,7 +69,7 @@
 		<a class="nav-link" href="{{ route('loans.create') }}">{{ _lang('Disburse Loan') }}</a>
 		<a class="nav-link" href="{{ route('loans.index') }}">{{ _lang('Repay Loan') }}</a>
 		<a class="nav-link" href="{{ route('loans.index') }}">{{ _lang('View Loans') }}</a>
-		{{-- <a class="nav-link" href="{{ route('loans.calculator') }}">{{ _lang('Loan Calculator') }}</a> --}}
+		<a class="nav-link" href="{{ route('loans.calculator') }}">{{ _lang('Loan Calculator') }}</a>
 	</nav>
 </div>
 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reports" aria-expanded="false"
