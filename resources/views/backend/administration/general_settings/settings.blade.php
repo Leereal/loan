@@ -233,7 +233,7 @@
 									</div>
 								</div>
 
-								<div class="col-md-12">
+								<div class="col-md-6">
 									<div class="form-group">
 										<label class="control-label">{{ _lang('Branch View Limit') }}</label>
 										<select class="form-control" name="branch_view" required>
@@ -241,6 +241,18 @@
 												)=='disabled' ? 'selected' : '' }}>{{ _lang('Disable') }}</option>
 											<option value="enabled" {{ get_setting($settings, 'branch_view' )=='enabled'
 												? 'selected' : '' }}>{{ _lang('Enable') }}</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="control-label">{{ _lang('Receipt Printing') }}</label>
+										<select class="form-control" name="receipt_print" required>
+											<option value="disabled" {{ get_setting($settings, 'receipt_print'
+												)=='disabled' ? 'selected' : '' }}>{{ _lang('Disable') }}</option>
+											<option value="enabled" {{ get_setting($settings, 'receipt_print'
+												)=='enabled' ? 'selected' : '' }}>{{ _lang('Enable') }}</option>
 										</select>
 									</div>
 								</div>

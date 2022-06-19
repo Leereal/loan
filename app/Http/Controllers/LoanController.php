@@ -720,8 +720,14 @@ class LoanController extends Controller {
             DB::commit();
 
             if (!$request->ajax()) {
-                return redirect()->route('loans.index')->with('success', _lang('Payment Made Successfully'));
+                if (get_setting(Setting::get(), 'receipt_print')== 'enabled') {
+                    $transaction = Transaction::find($debit->id);               
+                    return view('backend.loan.receipt', compact('transaction'));
+                }else{
+                    return redirect()->route('loans.index')->with('success', _lang('Payment Made Successfully'));
+                }
             } else {
+                
                 return response()->json(['result' => 'success', 'action' => 'store', 'message' => _lang('Payment Made Successfully'), 'data' => $loanpayment, 'table' => '#loan_payments_table']);
             }
         }        
@@ -729,5 +735,17 @@ class LoanController extends Controller {
     public function statement(Request $request){    
         $loan = Loan::find($request->id);
         return view('backend.loan.statement',compact('loan'));                        
+    }
+
+    public function receipt($id){    
+       
+        if(get_setting(Setting::get(),'receipt_print')== 'enabled'){ 
+            // dd("Here")      ;
+            return view('backend.loan.statement');                          
+        }
+        else{
+            return;
+        }
+                                
     }
 }

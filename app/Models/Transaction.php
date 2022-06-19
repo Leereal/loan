@@ -23,6 +23,9 @@ class Transaction extends Model {
         return $this->belongsTo('App\Models\Currency', 'currency_id')->withDefault();
     }
 
+    public function branch() {
+        return $this->belongsTo('App\Models\Branch', 'branch_id')->withDefault();
+    }
     public function loan() {
         return $this->belongsTo('App\Models\Loan', 'loan_id')->withDefault();
     }
