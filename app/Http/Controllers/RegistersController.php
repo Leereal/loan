@@ -209,6 +209,10 @@ class RegistersController extends Controller
             ->editColumn('loan_product', function ($loan){ 
                 return $loan->loan_product->name;
             })
+            ->editColumn('loan_id', function ($loan){
+              
+                return  '<a href="' . action('LoanController@statement', $loan->id) . '">' . _lang($loan->loan_id) . '</a>'; 
+            })
             ->editColumn('cash_out', function ($loan) use($request) {
                 if($request->currency){
                     return decimalPlace($loan->cash_out, currency($loan->currency->name));
@@ -267,7 +271,7 @@ class RegistersController extends Controller
             ->setRowId(function ($loan) {
                 return "row_" . $loan->id;
             })
-            ->rawColumns(['borrower.name']) //to render html
+            ->rawColumns(['borrower.name','loan_id']) //to render html
             ->make(true);
     }
 }
