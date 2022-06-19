@@ -7,8 +7,8 @@
             <div class="card-header d-flex align-items-center">
                 <span class="panel-title">{{ _lang('Registers') }}</span>
             </div>
-            <div class="ml-auto">
-                <span class="form-group">
+            <div class="ml-auto row">
+                <span class="form-group col">
                     <label for="loan_product">Loan Product</label>
                     <select name="loan_product" class="select-filter filter-select">
                         <option value="">{{ _lang('All') }}</option>
@@ -19,7 +19,7 @@
                 </span>
                 @if(get_setting(\App\Models\Setting::all(),'branch_view'=='disabled') || auth()->user()->user_type
                 == 'admin')
-                <span class="form-group">
+                <span class="form-group col">
                     <label for="branch">Branch</label>
                     <select name="branch" class="select-filter filter-select">
                         <option value="">{{ _lang('All') }}</option>
@@ -29,7 +29,7 @@
                     </select>
                 </span>
                 @endif
-                <span class="form-group">
+                <span class="form-group col">
                     <label for="age">Age Analysis</label>
                     <select name="age" class="select-filter filter-select">
                         <option value="">{{ _lang('All') }}</option>
@@ -38,7 +38,7 @@
                         @endforeach
                     </select>
                 </span>
-                <span class="form-group">
+                <span class="form-group col">
                     <label for="currency">Currency</label>
                     <select name="currency" class="select-filter filter-select">
                         <option value="">{{ _lang('All') }}</option>
@@ -47,7 +47,7 @@
                         @endforeach
                     </select>
                 </span>
-                <span class="form-group">
+                <span class="form-group col">
                     <label for="withdraw_method">Disbursement Method</label>
                     <select name="withdraw_method" class="select-filter filter-select">
                         <option value="">{{ _lang('All') }}</option>
@@ -56,7 +56,7 @@
                         @endforeach
                     </select>
                 </span>
-                <span class="form-group">
+                <span class="form-group col">
                     <label for="status">Loan Status</label>
                     <select name="status" class="select-filter filter-select">
                         <option value="">{{ _lang('All') }}</option>
@@ -69,9 +69,14 @@
                         <option value="6">{{ _lang('Bad Debts') }}</option>
                     </select>
                 </span>
+                <span class="col">
+                    <a class="btn btn-primary btn-sm" href="{{ route('registers.index') }}"><i
+                            class="icofont-refresh"></i>
+                        {{ _lang('Refresh') }}</a>
 
-                <a class="btn btn-primary btn-sm" href="{{ route('registers.index') }}"><i class="icofont-refresh"></i>
-                    {{ _lang('Refresh') }}</a>
+                </span>
+
+
             </div>
 
             <div class="card-body">
