@@ -53,6 +53,10 @@ class Loan extends Model {
         return $this->hasMany('App\Models\LoanRepayment', 'loan_id');
     }
 
+    public function transactions() {
+        return $this->hasMany('App\Models\Transaction', 'loan_id');
+    }
+
     public function payments() {
         return $this->hasMany('App\Models\LoanPayment', 'loan_id');
     }

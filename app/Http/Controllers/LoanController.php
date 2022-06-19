@@ -58,6 +58,10 @@ class LoanController extends Controller {
                     $query->where('status', $request->status);
                 }
             }, true)
+            ->editColumn('loan_id', function ($loan){
+              
+                return  '<a href="'. action('LoanController@statement', $loan->id) . '">' . _lang($loan->loan_id) . '</a>'; 
+            })
             ->editColumn('borrower.first_name', function ($loan) {
                 return $loan->borrower->first_name . ' ' . $loan->borrower->last_name;
             })
@@ -93,7 +97,7 @@ class LoanController extends Controller {
             ->setRowId(function ($loan) {
                 return "row_" . $loan->id;
             })
-            ->rawColumns(['status', 'action'])
+            ->rawColumns(['status', 'action','loan_id'])
             ->make(true);
     }
 
@@ -160,10 +164,11 @@ class LoanController extends Controller {
         $loan->withdraw_method_id     = $request->input('withdraw_method_id');
         $loan->first_payment_date     = $request->input('first_payment_date');
         $loan->release_date           = $request->input('release_date');
-        $loan->applied_amount         = $request->input('applied_amount');
-        $loan->cash_out               = $request->input('cash_out');  
+        $loan->applied_amount         = ceil_amount($request->input('applied_amount'),$loan_product->ceil_factor);
+        $loan->cash_out               = ceil_amount($request->input('cash_out'),$loan_product->ceil_factor);  
         // $loan->admin_fee              = $loan->applied_amount - $loan->cash_out;   
-        $loan->admin_fee              = $loan->applied_amount * $loan_product->admin_fee/100;
+        $loan->admin_fee              = ceil_amount(($loan->applied_amount * $loan_product->admin_fee/100),$loan_product->ceil_factor);
+        $loan->total_interest         = ceil_amount(($loan->applied_amount * $loan_product->interest_rate/100),$loan_product->ceil_factor);
         $loan->service_fee            = $loan_product->service_fee;      
         $loan->attachment             = $attachment;
         $loan->description            = $request->input('description');
@@ -284,11 +289,11 @@ class LoanController extends Controller {
             $loan_repayment                   = new LoanRepayment();
             $loan_repayment->loan_id          = $loan->id;
             $loan_repayment->repayment_date   = $repayment['date'];
-            $loan_repayment->amount_to_pay    = $repayment['amount_to_pay'];
+            $loan_repayment->amount_to_pay    = ceil_amount($repayment['amount_to_pay'],$loan->loan_product->ceil_factor);
             //$loan_repayment->penalty          = $repayment['penalty'];
-            $loan_repayment->principal_amount = $repayment['principle_amount'];
-            $loan_repayment->interest         = $repayment['interest'];
-            $loan_repayment->balance          = $repayment['balance'];
+            $loan_repayment->principal_amount = ceil_amount($repayment['principle_amount'],$loan->loan_product->ceil_factor);
+            $loan_repayment->interest         = ceil_amount($repayment['interest'],$loan->loan_product->ceil_factor);
+            $loan_repayment->balance          = ceil_amount($repayment['balance'],$loan->loan_product->ceil_factor);
             $loan->ip_address                 = request()->ip();
             $loan_repayment->save();
         }
@@ -296,33 +301,62 @@ class LoanController extends Controller {
         //Create Transaction for disbursement
         $transaction                  = new Transaction();
         $transaction->user_id         = $loan->borrower_id;
+        $transaction->receipt_number  = 'RN'.auth()->id().time();
         $transaction->currency_id     = $loan->currency_id;
-        $transaction->amount          = $loan->cash_out; //Changed from applied_amount because we are calculating amount 
+        $transaction->amount          = ceil_amount($loan->cash_out,$loan->loan_product->ceil_factor); //Changed from applied_amount because we are calculating amount 
         $transaction->dr_cr           = 'cr';
-        $transaction->type            = 'Loan';
+        $transaction->type            = 'Loan_Disbursement';
         $transaction->method          = 'Manual';
         $transaction->status          = 2;
-        $transaction->note            = 'Loan Approved';
+        $transaction->note            = 'Loan Disbursement';
         $transaction->loan_id         = $loan->id;
         $transaction->ip_address      = request()->ip();
         $transaction->created_user_id = auth()->id();
-
         $transaction->save();
+
+        //Create Transaction for Interest Amount
+        $transaction                  = new Transaction();
+        $transaction->user_id         = $loan->borrower_id;
+        $transaction->currency_id     = $loan->currency_id;
+        $transaction->amount          = ceil_amount($loan->total_interest,$loan->loan_product->ceil_factor); //From loan approved
+        $transaction->dr_cr           = 'cr';
+        $transaction->type            = 'Interest';
+        $transaction->method          = 'Manual';
+        $transaction->status          = 1;
+        $transaction->note            = 'Interest';
+        $transaction->loan_id         = $loan->id;
+        $transaction->ip_address      = request()->ip(); 
+        $transaction->save();
+
+        if ($loan->loan_product->service_fee > 0) {
+            //Create Transaction for Service Fee
+            $transaction                  = new Transaction();
+            $transaction->user_id         = $loan->borrower_id;
+            $transaction->currency_id     = $loan->currency_id;
+            $transaction->amount          = ceil_amount($loan->service_fee, $loan->loan_product->ceil_factor); //From loan approved
+            $transaction->dr_cr           = 'cr';
+            $transaction->type            = 'Service_Fee';
+            $transaction->method          = 'Manual';
+            $transaction->status          = 1;
+            $transaction->note            = 'Service Fee';
+            $transaction->loan_id         = $loan->id;
+            $transaction->ip_address      = request()->ip();
+            $transaction->save();
+        }       
 
         //Create Transaction for Admin Fee
         $transaction                  = new Transaction();
         $transaction->user_id         = $loan->borrower_id;
         $transaction->currency_id     = $loan->currency_id;
-        $transaction->amount          = $loan->admin_fee; //From loan approved
+        $transaction->amount          = ceil_amount($loan->admin_fee,$loan->loan_product->ceil_factor); //From loan approved
         $transaction->dr_cr           = 'dr';
         $transaction->type            = 'Admin_Fee';
         $transaction->method          = 'Manual';
         $transaction->status          = 2;
-        $transaction->note            = 'Admin Fee Payment';
+        $transaction->note            = 'Admin Fee';
         $transaction->loan_id         = $loan->id;
         $transaction->ip_address      = request()->ip();
-        $transaction->created_user_id = auth()->id();
-
+        $transaction->created_user_id = auth()->id(); 
         $transaction->save();
 
         DB::commit();
@@ -456,7 +490,8 @@ class LoanController extends Controller {
         $loan->release_date           = $request->input('release_date');
         $loan->applied_amount         = $request->input('applied_amount');
         $loan->cash_out               = $request->input('cash_out');  
-        $loan->admin_fee              = $loan->applied_amount * $loan_product->admin_fee/100; 
+        $loan->admin_fee              = ceil_amount($loan->applied_amount * $loan_product->admin_fee/100,$loan->loan_product->ceil_factor);
+        $loan->total_interest         = ceil_amount(($loan->applied_amount * $loan_product->interest_rate/100),$loan_product->ceil_factor); 
         if ($request->hasfile('attachment')) {
             $loan->attachment = $attachment;
         }
@@ -689,5 +724,9 @@ class LoanController extends Controller {
                 return response()->json(['result' => 'success', 'action' => 'store', 'message' => _lang('Payment Made Successfully'), 'data' => $loanpayment, 'table' => '#loan_payments_table']);
             }
         }        
+    }
+    public function statement(Request $request){    
+        $loan = Loan::find($request->id);
+        return view('backend.loan.statement',compact('loan'));                        
     }
 }

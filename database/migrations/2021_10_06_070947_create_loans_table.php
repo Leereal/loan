@@ -26,6 +26,7 @@ class CreateLoansTable extends Migration {
             $table->decimal('late_payment_penalties', 10, 2);
             $table->decimal('cash_out', 10, 2);
             $table->decimal('admin_fee', 10, 2);
+            $table->decimal('total_interest', 10, 2);
             $table->decimal('service_fee', 10, 2)->nullable();
             $table->tinyInteger('ceil_factor')->default(1);  
             $table->text('attachment')->nullable();

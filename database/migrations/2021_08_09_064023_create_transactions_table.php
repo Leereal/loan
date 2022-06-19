@@ -14,6 +14,7 @@ class CreateTransactionsTable extends Migration {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
+            $table->bigInteger('receipt_number')->nullable();
             $table->bigInteger('currency_id');
             $table->decimal('amount', 10, 2);
             $table->decimal('fee', 10, 2)->default(0);
