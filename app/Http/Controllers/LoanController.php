@@ -9,6 +9,7 @@ use App\Models\LoanProduct;
 use App\Models\LoanRepayment;
 use App\Models\Setting;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Models\WithdrawMethod;
 use App\Notifications\ApprovedLoanRequest;
 use App\Notifications\RejectLoanRequest;
@@ -145,6 +146,35 @@ class LoanController extends Controller {
                     ->withInput();
             }
         }
+
+        $loan_product = LoanProduct::find($request->loan_product_id);
+        $borrower = User::find($request->borrower_id);
+        $sum_loans = Loan::where([['borrower_id',$request->borrower_id],['status',1]])->sum('applied_amount');
+
+        //Check if client is in overdue, internal or bad debts
+        if(Loan::where('borrower_id',$request->borrower_id)->whereNotIn('status',[0,1,2,3])->count() > 0){
+            return back()->with('error', _lang("Client is struggling to pay previous loans."));
+        }
+
+        //Check if amount is not exceeding the client limit
+        if ($borrower->employment_detail->limit <  $request->applied_amount) {
+            return back()->with('error', _lang("Sorry, Applied Amount is more than the client's limit"));
+        }
+
+        //Check if amount is not exceeding loan product limit
+        if ($loan_product->maximum_amount <  $request->applied_amount) {
+            return back()->with('error', _lang("Sorry, Applied Amount is exceeding the maximum allowed for this loan product"));
+        }
+
+        //Check if applied amount is not too small
+        if ($loan_product->minimum_amount >  $request->applied_amount) {
+            return back()->with('error', _lang("Sorry, Applied Amount is less than minimum allowed for this loan product"));
+        }
+
+        //Check if previous loans plus applied amount does not exceed client limit
+        if(($sum_loans+$request->applied_amount) > $borrower->employment_detail->limit){
+            return back()->with('error', _lang("Sorry, Client previous pending loans plus applied amount exceeded their limit"));
+        }        
         
         $attachment = "";
         if ($request->hasfile('attachment')) {
@@ -152,7 +182,7 @@ class LoanController extends Controller {
             $attachment = time() . $file->getClientOriginalName();
             $file->move(public_path() . "/uploads/media/", $attachment);
         }
-        $loan_product = LoanProduct::find($request->loan_product_id);
+       
 
         DB::beginTransaction();
 
