@@ -673,6 +673,7 @@ class LoanController extends Controller {
 
             //Create Debit Transactions
             $debit                  = new Transaction();
+            $debit->receipt_number  = 'RN'.auth()->id().time();
             $debit->user_id         = $request->client_id;
             $debit->currency_id     = $loan->currency_id;
             $debit->amount          = $amount;
