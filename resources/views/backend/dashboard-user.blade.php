@@ -10,11 +10,12 @@
 			<div class="card-body">
 				<div class="d-flex">
 					<div class="flex-grow-1">
-						<h5>{{ _lang('Active Users') }}</h5>
+						<h5>{{ _lang('Active Clients') }}</h5>
 						<h6 class="pt-1 mb-0"><b>{{ $active_customer }}</b></h6>
 					</div>
 					<div>
-						<a href="{{ route('users.filter') }}/active"><i class="icofont-arrow-right"></i>{{ _lang('View') }}</a>
+						<a href="{{ route('users.filter') }}/active"><i class="icofont-arrow-right"></i>{{ _lang('View')
+							}}</a>
 					</div>
 				</div>
 			</div>
@@ -28,11 +29,12 @@
 			<div class="card-body">
 				<div class="d-flex">
 					<div class="flex-grow-1">
-						<h5>{{ _lang('Inactive Users') }}</h5>
+						<h5>{{ _lang('Inactive Clients') }}</h5>
 						<h6 class="pt-1 mb-0"><b>{{ $inactive_customer }}</b></h6>
 					</div>
 					<div>
-						<a href="{{ route('users.filter') }}/inactive"><i class="icofont-arrow-right"></i>{{ _lang('View') }}</a>
+						<a href="{{ route('users.filter') }}/inactive"><i class="icofont-arrow-right"></i>{{
+							_lang('View') }}</a>
 					</div>
 				</div>
 			</div>
@@ -50,7 +52,8 @@
 						<h6 class="pt-1 mb-0"><b>{{ request_count('pending_tickets') }}</b></h6>
 					</div>
 					<div>
-						<a href="{{ route('support_tickets.index',['status' => 'pending']) }}"><i class="icofont-arrow-right"></i>{{ _lang('View') }}</a>
+						<a href="{{ route('support_tickets.index',['status' => 'pending']) }}"><i
+								class="icofont-arrow-right"></i>{{ _lang('View') }}</a>
 					</div>
 				</div>
 			</div>
@@ -69,14 +72,15 @@
 						<h6 class="pt-1 mb-0"><b>{{ request_count('deposit_requests') }}</b></h6>
 					</div>
 					<div>
-						<a href="{{ route('deposit_requests.index') }}"><i class="icofont-arrow-right"></i>{{ _lang('View') }}</a>
+						<a href="{{ route('deposit_requests.index') }}"><i class="icofont-arrow-right"></i>{{
+							_lang('View') }}</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	@endif --}}
-{{-- 
+	{{--
 	@if (in_array('dashboard.withdraw_requests_widget',$permissions))
 	<div class="col-xl-3 col-md-6">
 		<div class="card mb-4 border-bottom-card border-secondary">
@@ -87,7 +91,8 @@
 						<h6 class="pt-1 mb-0"><b>{{ request_count('withdraw_requests') }}</b></h6>
 					</div>
 					<div>
-						<a href="{{ route('withdraw_requests.index') }}"><i class="icofont-arrow-right"></i>{{ _lang('View') }}</a>
+						<a href="{{ route('withdraw_requests.index') }}"><i class="icofont-arrow-right"></i>{{
+							_lang('View') }}</a>
 					</div>
 				</div>
 			</div>
@@ -123,7 +128,8 @@
 						<h6 class="pt-1 mb-0"><b>{{ request_count('fdr_requests') }}</b></h6>
 					</div>
 					<div>
-						<a href="{{ route('fixed_deposits.index') }}"><i class="icofont-arrow-right"></i>{{ _lang('View') }}</a>
+						<a href="{{ route('fixed_deposits.index') }}"><i class="icofont-arrow-right"></i>{{
+							_lang('View') }}</a>
 					</div>
 				</div>
 			</div>
@@ -141,7 +147,8 @@
 						<h6 class="pt-1 mb-0"><b>{{ request_count('wire_transfer_requests') }}</b></h6>
 					</div>
 					<div>
-						<a href="{{ route('transfer_requests.index') }}"><i class="icofont-arrow-right"></i>{{ _lang('View') }}</a>
+						<a href="{{ route('transfer_requests.index') }}"><i class="icofont-arrow-right"></i>{{
+							_lang('View') }}</a>
 					</div>
 				</div>
 			</div>
@@ -176,25 +183,30 @@
 						</thead>
 						<tbody>
 							@foreach($recent_transactions as $transaction)
-								@php
-								$symbol = $transaction->dr_cr == 'dr' ? '-' : '+';
-								$class  = $transaction->dr_cr == 'dr' ? 'text-danger' : 'text-success';
-								@endphp
-								<tr>
-									<td>{{ $transaction->created_at }}</td>
-									<td>{{ $transaction->currency->name }}</td>
-									@if($transaction->dr_cr == 'dr')
-									<td>{{ decimalPlace(($transaction->amount - $transaction->fee), currency($transaction->currency->name)) }}</td>
-									@else
-									<td>{{ decimalPlace(($transaction->amount + $transaction->fee), currency($transaction->currency->name)) }}</td>
-									@endif
-									<td>{{ $transaction->dr_cr == 'dr' ? '+ '.decimalPlace($transaction->fee, currency($transaction->currency->name)) : '- '.decimalPlace($transaction->fee, currency($transaction->currency->name)) }}</td>
-									<td><span class="{{ $class }}">{{ $symbol.' '.decimalPlace($transaction->amount, currency($transaction->currency->name)) }}</span></td>
-									<td>{{ strtoupper($transaction->dr_cr) }}</td>
-									<td>{{ str_replace('_',' ',$transaction->type) }}</td>
-									<td>{{ $transaction->method }}</td>
-									<td>{!! xss_clean(transaction_status($transaction->status)) !!}</td>
-								</tr>
+							@php
+							$symbol = $transaction->dr_cr == 'dr' ? '-' : '+';
+							$class = $transaction->dr_cr == 'dr' ? 'text-danger' : 'text-success';
+							@endphp
+							<tr>
+								<td>{{ $transaction->created_at }}</td>
+								<td>{{ $transaction->currency->name }}</td>
+								@if($transaction->dr_cr == 'dr')
+								<td>{{ decimalPlace(($transaction->amount - $transaction->fee),
+									currency($transaction->currency->name)) }}</td>
+								@else
+								<td>{{ decimalPlace(($transaction->amount + $transaction->fee),
+									currency($transaction->currency->name)) }}</td>
+								@endif
+								<td>{{ $transaction->dr_cr == 'dr' ? '+ '.decimalPlace($transaction->fee,
+									currency($transaction->currency->name)) : '- '.decimalPlace($transaction->fee,
+									currency($transaction->currency->name)) }}</td>
+								<td><span class="{{ $class }}">{{ $symbol.' '.decimalPlace($transaction->amount,
+										currency($transaction->currency->name)) }}</span></td>
+								<td>{{ strtoupper($transaction->dr_cr) }}</td>
+								<td>{{ str_replace('_',' ',$transaction->type) }}</td>
+								<td>{{ $transaction->method }}</td>
+								<td>{!! xss_clean(transaction_status($transaction->status)) !!}</td>
+							</tr>
 							@endforeach
 						</tbody>
 					</table>

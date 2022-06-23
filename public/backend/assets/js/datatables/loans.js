@@ -18,8 +18,9 @@
         console.log(request.responseText);
       },
     },
+    order: [[0, 'asc']],
     columns: [
-      { data: "loan_id", name: "loan_id" },
+      { data: "loan_id", name: "loan_id", orderable: true},
       { data: "loan_product.name", name: "loan_product.name" },
       { data: "borrower.name", name: "borrower.name" },
       { data: "release_date", name: "release_date" },
@@ -30,7 +31,7 @@
     responsive: true,
     bStateSave: true,
     bAutoWidth: false,
-    ordering: false,
+    ordering: true,
     language: {
       decimal: "",
       emptyTable: $lang_no_data_found,

@@ -13,12 +13,13 @@
 						<option value="1">{{ _lang('Approved') }}</option>
 						<option value="2">{{ _lang('Completed') }}</option>
 					</select>
-					<a class="btn btn-primary btn-sm" href="{{ route('loans.create') }}"><i class="icofont-plus-circle"></i> {{ _lang('Add New') }}</a>
+					<a class="btn btn-primary btn-sm" href="{{ route('loans.create') }}"><i
+							class="icofont-plus-circle"></i> {{ _lang('Add New') }}</a>
 				</div>
 			</div>
 
 			<div class="card-body">
-				<table id="loans_table" class="table table-bordered">
+				<table id="loans_table" class="table table-bordered display">
 					<thead>
 						<tr>
 							<th>{{ _lang('Loan ID') }}</th>

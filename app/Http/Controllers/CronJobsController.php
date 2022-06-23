@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FixedDeposit;
+use App\Models\Loan;
 use App\Models\Transaction;
 use App\Notifications\FDRMatured;
 use DB;
@@ -55,6 +56,14 @@ class CronJobsController extends Controller {
         DB::commit();
 
         echo 'Scheduled task runs successfully';
+    }
+
+    public function loan_engine(){
+        $loans = Loan::all();
+
+        //If loan is still in approved level 1 and exceed due date add half_interest 
+        //If loan exceeded due date by 
+
     }
 
 }

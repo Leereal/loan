@@ -79,9 +79,8 @@
                                     currency($loan->currency->name)) }}</div>
 
                                 <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
-                                        class="text-600 text-90">Interest : </span> {{
-                                    $loan->loan_product->interest_rate
-                                    }}%</div>
+                                        class="text-600 text-90">Admin Fee : </span>
+                                    {{decimalPlace($loan->admin_fee,currency($loan->currency->name))}}</div>
 
                                 <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span
                                         class="text-600 text-90">Status:</span>
@@ -184,24 +183,24 @@
                                     <?php $balance = 0; ?>
                                     <?php $total_paid = 0;?>
                                     @foreach ( $loan->transactions as $transaction )
+                                    @if ($transaction->type !="Admin_Fee")
+
                                     <tr>
                                         <td>{{ $transaction->receipt_number ?? 'N/A' }}</td>
                                         <td>{{ $transaction->created_by->name ?? 'Auto System'}}</td>
                                         <td>{{ $transaction->note }}</td>
                                         <td>{{ $transaction->created_at}}</td>
                                         <td class="text-95">
-                                            @if($transaction->dr_cr=='cr' && $transaction->type=='Loan_Disbursement')
-                                            {{decimalPlace($transaction->loan->applied_amount +
-                                            $transaction->loan->admin_fee,currency($transaction->currency->name))}}
-                                            <?php $balance += $transaction->loan->applied_amount +
-                                            $transaction->loan->admin_fee; ?>
+                                            @if($transaction->dr_cr=='cr' && $transaction->type == 'Loan_Disbursement')
+                                            {{decimalPlace($transaction->loan->applied_amount,currency($transaction->currency->name))}}
+                                            <?php $balance += $transaction->loan->applied_amount ?>
                                             @elseif($transaction->dr_cr=='cr')
                                             {{decimalPlace($transaction->amount,currency($transaction->currency->name))}}
                                             <?php $balance += $transaction->amount; ?>
                                             @endif
                                         </td>
                                         <td class="text-secondary-d2">
-                                            @if($transaction->dr_cr=='dr')
+                                            @if($transaction->dr_cr=='dr' )
                                             {{
                                             decimalPlace($transaction->amount,currency($transaction->currency->name));
                                             }}
@@ -212,6 +211,7 @@
                                         <td class="text-secondary-d2">{{
                                             decimalPlace($balance,currency($transaction->currency->name)) }}</td>
                                     </tr>
+                                    @endif
                                     @endforeach
                                 </tbody>
                             </table>

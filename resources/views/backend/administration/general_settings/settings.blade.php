@@ -257,6 +257,19 @@
 									</div>
 								</div>
 
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="control-label">{{ _lang('Allow Half Month Interest Charge')
+											}}</label>
+										<select class="form-control" name="half_interest" required>
+											<option value="disabled" {{ get_setting($settings, 'half_interest'
+												)=='disabled' ? 'selected' : '' }}>{{ _lang('No') }}</option>
+											<option value="enabled" {{ get_setting($settings, 'half_interest'
+												)=='enabled' ? 'selected' : '' }}>{{ _lang('Yes') }}</option>
+										</select>
+									</div>
+								</div>
+
 								<div class="col-md-12">
 									<div class="form-group">
 										<button type="submit" class="btn btn-primary"><i

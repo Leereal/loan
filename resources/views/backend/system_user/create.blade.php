@@ -56,7 +56,8 @@
                             <div class="form-group row">
                                 <label class="col-xl-3 col-form-label">{{ _lang('User Role') }}</label>
                                 <div class="col-xl-9">
-                                    <select class="form-control select2-ajax" data-href="{{ route('roles.create') }}" data-title="{{ _lang('Add New Role') }}" data-value="id" data-display="name"
+                                    <select class="form-control select2-ajax" data-href="{{ route('roles.create') }}"
+                                        data-title="{{ _lang('Add New Role') }}" data-value="id" data-display="name"
                                         data-table="roles" id="role_id" name="role_id" disabled>
                                     </select>
                                 </div>
@@ -70,6 +71,17 @@
                                         <option value="">{{ _lang('Select One') }}</option>
                                         <option value="1">{{ _lang('Active') }}</option>
                                         <option value="0">{{ _lang('In Active') }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-xl-3 col-form-label">{{ _lang('Branch') }}</label>
+                                <div class="col-xl-9">
+                                    <select class="form-control auto-select" data-selected="{{ old('branch_id') }}"
+                                        name="branch_id" required>
+                                        <option value="">{{ _lang('Select One') }}</option>
+                                        {{ create_option('branches','id','name') }}
                                     </select>
                                 </div>
                             </div>

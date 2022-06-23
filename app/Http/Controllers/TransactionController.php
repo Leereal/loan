@@ -38,7 +38,7 @@ class TransactionController extends Controller {
         return Datatables::eloquent($transactions)
             ->filter(function ($query) use ($request) {
                 if(get_setting(Setting::get(),'branch_view')== 'enabled' && Auth::user()->user_type != 'admin' ){
-                    $query->where('loans.branch_id', Auth::user()->branch->id);                    
+                    $query->where('transactions.branch_id', Auth::user()->branch->id);                    
                 }
                 if ($request->has('status')) {
                     $query->where('status', $request->status);

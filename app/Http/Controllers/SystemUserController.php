@@ -55,6 +55,7 @@ class SystemUserController extends Controller {
             'name'            => 'required|max:255',
             'email'           => 'required|email|unique:users|max:255',
             'user_type'       => 'required',
+            'branch_id'       => 'required',
             'status'          => 'required',
             'profile_picture' => 'nullable|image',
             'password'        => 'required|min:6',
@@ -82,6 +83,7 @@ class SystemUserController extends Controller {
         $user->email             = $request->input('email');
         $user->user_type         = $request->input('user_type');
         $user->role_id           = $request->input('role_id');
+        $user->branch_id           = $request->input('branch_id');
         $user->status            = $request->input('status');
         $user->profile_picture   = $profile_picture;
         $user->email_verified_at = date('Y-m-d H:i:s');
@@ -152,6 +154,7 @@ class SystemUserController extends Controller {
             ],
             'user_type'       => 'required',
             'status'          => 'required',
+            'branch_id'       => 'required',
             'profile_picture' => 'nullable|image',
             'password'        => 'nullable|min:6',
         ]);
@@ -176,6 +179,7 @@ class SystemUserController extends Controller {
         $user->name      = $request->input('name');
         $user->email     = $request->input('email');
         $user->user_type = $request->input('user_type');
+        $user->branch_id = $request->input('branch_id');
         $user->role_id   = $request->input('role_id');
         $user->status    = $request->input('status');
         if ($request->hasfile('profile_picture')) {

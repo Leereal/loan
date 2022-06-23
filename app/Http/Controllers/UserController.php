@@ -65,7 +65,7 @@ class UserController extends Controller {
             ->filter(function ($query){
 
                 if(get_setting(Setting::get(),'branch_view')== 'enabled' && Auth::user()->user_type != 'admin' ){
-                    $query->where('loans.branch_id', Auth::user()->branch->id);                    
+                    $query->where('users.branch_id', Auth::user()->branch->id);                    
                 }
             }, true)
 

@@ -6,19 +6,34 @@
 	{{ _lang('Dashboard') }}
 </a>
 
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#users" aria-expanded="false" aria-controls="collapseLayouts">
+@if (in_array('loans.create',$permissions))
+<a class="nav-link" href="{{ route('loans.create') }}">
+	<div class="sb-nav-link-icon"><i class="icofont-listing-number"></i></div>
+	{{ _lang('Disburse Loan') }}
+</a>
+@endif
+
+@if (in_array('loan.repay',$permissions))
+<a class="nav-link" href="{{ route('loans.index') }}">
+	<div class="sb-nav-link-icon"><i class="icofont-listing-number"></i></div>
+	{{ _lang('Repay Loan') }}
+</a>
+@endif
+
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#users" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-users-alt-3"></i></div>
-	{{ _lang('Users') }}
+	{{ _lang('Clients') }}
 	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
 </a>
 <div class="collapse" id="users" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 	<nav class="sb-sidenav-menu-nested nav">
 		@if (in_array('users.create',$permissions))
-		<a class="nav-link" href="{{ route('users.create') }}">{{ _lang('Add New') }}</a>
+		<a class="nav-link" href="{{ route('users.create') }}">{{ _lang('Add Client') }}</a>
 		@endif
 
 		@if (in_array('users.index',$permissions))
-		<a class="nav-link" href="{{ route('users.index') }}">{{ _lang('All Users') }}</a>
+		<a class="nav-link" href="{{ route('users.index') }}">{{ _lang('All Clients') }}</a>
 		@endif
 
 		@if (in_array('users.filter',$permissions))
@@ -29,7 +44,7 @@
 		@endif
 	</nav>
 </div>
-{{-- 
+{{--
 @if (in_array('transfer_requests.index',$permissions))
 <a class="nav-link" href="{{ route('transfer_requests.index') }}">
 	<div class="sb-nav-link-icon"><i class="icofont-bank-transfer-alt"></i></div>
@@ -38,7 +53,8 @@
 </a>
 @endif --}}
 
-{{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#deposit" aria-expanded="false" aria-controls="collapseLayouts">
+{{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#deposit" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-plus-square"></i></div>
 	{{ _lang('Deposit') }}
 	{!! xss_clean(request_count('deposit_requests',true)) !!}
@@ -59,8 +75,9 @@
 		@endif
 	</nav>
 </div> --}}
-{{-- 
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#withdraw" aria-expanded="false" aria-controls="collapseLayouts">
+{{--
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#withdraw" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-minus-square"></i></div>
 	{{ _lang('Withdraw') }}
 	{!! xss_clean(request_count('withdraw_requests',true)) !!}
@@ -89,7 +106,28 @@
 </a>
 @endif
 
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#loans" aria-expanded="false" aria-controls="collapseLayouts">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reports" aria-expanded="false"
+	aria-controls="collapseLayouts">
+	<div class="sb-nav-link-icon"><i class="icofont-book"></i></div>
+	{{ _lang('Reports') }}
+	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
+</a>
+<div class="collapse" id="reports" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+	<nav class="sb-sidenav-menu-nested nav">
+		@if (in_array('transactions.index',$permissions))
+		<a class="nav-link" href="{{ route('transactions.index') }}">{{ _lang('All Transactions') }}</a>
+		@endif
+		@if (in_array('registers.index',$permissions))
+		<a class="nav-link" href="{{ route('registers.index') }}">{{ _lang('Registers Summary') }}</a>
+		@endif
+		@if (in_array('registers.view',$permissions))
+		<a class="nav-link" href="{{ route('registers.view') }}">{{ _lang('Registers') }}</a>
+		@endif
+	</nav>
+</div>
+
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#loans" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-dollar-minus"></i></div>
 	{{ _lang('Loan Management') }}
 	{!! xss_clean(request_count('pending_loans',true)) !!}
@@ -105,17 +143,14 @@
 		<a class="nav-link" href="{{ route('loans.calculator') }}">{{ _lang('Loan Calculator') }}</a>
 		@endif
 
-		@if (in_array('loans.create',$permissions))
-		<a class="nav-link" href="{{ route('loans.create') }}">{{ _lang('Add New Loan') }}</a>
-		@endif	
-
 		@if (in_array('loan_products.index',$permissions))
 		<a class="nav-link" href="{{ route('loan_products.index') }}">{{ _lang('Loan Products') }}</a>
 		@endif
 	</nav>
 </div>
-{{-- 
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#fdr" aria-expanded="false" aria-controls="collapseLayouts">
+{{--
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#fdr" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-money"></i></div>
 	{{ _lang('Fixed Deposit') }}
 	{!! xss_clean(request_count('fdr_requests',true)) !!}
@@ -137,7 +172,8 @@
 	</nav>
 </div> --}}
 
-{{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#gift_card" aria-expanded="false" aria-controls="collapseLayouts">
+{{-- <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#gift_card" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-gift"></i></div>
 	{{ _lang('Gift Cards') }}
 	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
@@ -154,7 +190,8 @@
 	</nav>
 </div> --}}
 
-<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tickets" aria-expanded="false" aria-controls="collapseLayouts">
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#tickets" aria-expanded="false"
+	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-live-support"></i></div>
 	{{ _lang('Support Tickets') }}
 	{!! xss_clean(request_count('pending_tickets',true)) !!}
@@ -163,9 +200,12 @@
 <div class="collapse" id="tickets" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 	<nav class="sb-sidenav-menu-nested nav">
 		@if (in_array('support_tickets.index',$permissions))
-		<a class="nav-link" href="{{ route('support_tickets.index',['status' => 'active']) }}">{{ _lang('Active Tickets') }}</a>
-		<a class="nav-link" href="{{ route('support_tickets.index',['status' => 'pending']) }}">{{ _lang('Pending Tickets') }}</a>
-		<a class="nav-link" href="{{ route('support_tickets.index',['status' => 'closed']) }}">{{ _lang('Closed Tickets') }}</a>
+		<a class="nav-link" href="{{ route('support_tickets.index',['status' => 'active']) }}">{{ _lang('Active
+			Tickets') }}</a>
+		<a class="nav-link" href="{{ route('support_tickets.index',['status' => 'pending']) }}">{{ _lang('Pending
+			Tickets') }}</a>
+		<a class="nav-link" href="{{ route('support_tickets.index',['status' => 'closed']) }}">{{ _lang('Closed
+			Tickets') }}</a>
 		@endif
 
 		@if (in_array('support_tickets.create',$permissions))
