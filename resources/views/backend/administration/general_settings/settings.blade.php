@@ -663,9 +663,10 @@
 								<div class="col-md-12">
 									<div class="form-group">
 										<label class="control-label">{{ _lang('Cron Jobs URL') }} (<b>{{ _lang('Run
-												every 12 hours') }}</b>)</label>
+												Engine
+												every 24 hours') }}</b>)</label>
 										<input type="text" class="form-control"
-											value="wget -O- {{ url('console/run') }} >> /dev/null" readOnly>
+											value="wget -O- {{ url('console/engine') }} >> /dev/null" readOnly>
 									</div>
 								</div>
 							</div>

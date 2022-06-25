@@ -339,4 +339,4 @@ Route::get('migration/update', 'Install\UpdateController@update_migration');
 
 //Cron Job Controller
 Route::get('console/run', 'CronJobsController@run')->name('console.run');
-Route::get('console/engine', 'CronJobsController@engine')->name('console.engine');
+Route::get('console/engine', 'CronJobsController@loan_engine')->name('console.engine');

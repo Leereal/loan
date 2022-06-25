@@ -6,6 +6,7 @@ use App\Models\FixedDeposit;
 use App\Models\Loan;
 use App\Models\Transaction;
 use App\Notifications\FDRMatured;
+use Carbon\Carbon;
 use DB;
 
 class CronJobsController extends Controller {
@@ -59,11 +60,93 @@ class CronJobsController extends Controller {
     }
 
     public function loan_engine(){
-        $loans = Loan::all();
+        @ini_set('max_execution_time', 0);
+        @set_time_limit(0);
 
-        //If loan is still in approved level 1 and exceed due date add half_interest 
-        //If loan exceeded due date by 
+        
+        $loans = Loan::where([['status',1],['next_due_date', '<', now()]])->get();  
+        if($loans->isNotEmpty()){
+            DB::beginTransaction();
+                foreach($loans as $loan){ //Loop through each loan                    
 
+                    //If loan is still in approved level 1 and exceed due date add half_interest 
+                    if ($loan->default_status == 0 && Carbon::now() > $loan->next_due_date) {
+                        
+                        $this->default_charge($loan,1);
+                    }
+                    else if ($loan->default_status == 1 && Carbon::now() > $loan->next_due_date) {                    
+                        $this->default_charge($loan,2);
+                    }
+                    else if ($loan->default_status == 2 && Carbon::now() > $loan->next_due_date) {
+                        $this->default_charge($loan,3);
+                    }
+                    else if ($loan->default_status == 3 && Carbon::now() > $loan->next_due_date) {
+                        $this->default_charge($loan,4);
+                    }
+                    else if ($loan->default_status == 4 && Carbon::now() > $loan->next_due_date) {
+                        $this->default_charge($loan,5);
+                    }
+                    else if ($loan->default_status == 5 && Carbon::now() > $loan->next_due_date) {
+                        $this->default_charge($loan,6);
+                    }
+                    else if ($loan->default_status == 6 && Carbon::now() > $loan->next_due_date) {
+                        $this->default_charge($loan,7);
+                    }
+                    else if ($loan->default_status == 7 && Carbon::now() > $loan->next_due_date) {
+                        $this->default_charge($loan,8);
+                    }
+                    else if ($loan->default_status == 8 && Carbon::now() > $loan->next_due_date) {              
+                        $this->default_charge($loan,8,4);
+                    }
+                }
+            DB::commit();
+            dd("Loans updated successfully");
+        }
+        else{
+            dd("All loans upto date");
+        }
+
+        
+
+    }
+
+    protected function default_charge($loan,$default_status,$status=null){
+         //adding half interest to the loan
+         $interest                  = new Transaction();
+         $interest->user_id         = $loan->borrower_id;
+         $interest->currency_id     = $loan->currency_id;
+         $interest->amount          = ceil_amount(($loan->total_interest/2), $loan->loan_product->ceil_factor);
+         $interest->dr_cr           = 'cr';
+         $interest->type            = 'Auto_Interest';
+         $interest->method          = 'Manual';
+         $interest->status          = 2;
+         $interest->note            = 'Loan Interest '.'('.($loan->loan_product->interest_rate/2).'%)';
+         $interest->loan_id         = $loan->id;
+         $interest->ip_address      = request()->ip();
+         $interest->save();
+         
+         //Charge half default fee
+         $penalty                  = new Transaction();
+         $penalty->user_id         = $loan->borrower_id;
+         $penalty->currency_id     = $loan->currency_id;
+         $penalty->amount          = ceil_amount(($loan->applied_amount*($loan->loan_product->penalty_fee/100)/2), $loan->loan_product->ceil_factor);
+         $penalty->dr_cr           = 'cr';
+         $penalty->type            = 'Penalty_Fee';
+         $penalty->method          = 'Manual';
+         $penalty->status          = 2;
+         $penalty->note            = 'Penalty Fee '.'('.($loan->loan_product->penalty_fee/2).'%)';
+         $penalty->loan_id         = $loan->id;
+         $penalty->ip_address      = request()->ip();
+         $penalty->save();
+
+         //Update loan balances with new values
+         $loan->late_payment_penalties += ceil_amount(($loan->applied_amount*($loan->loan_product->penalty_fee/100)/2), $loan->loan_product->ceil_factor);
+         $loan->total_payable += $interest->amount + $penalty->amount;
+         $loan->next_due_date =  Carbon::parse($loan->next_due_date)->addDays(15);
+         $loan->default_status = $default_status;
+         $status && $loan->status = $status;
+         $loan->save();
+         
     }
 
 }

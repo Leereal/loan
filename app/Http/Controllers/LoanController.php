@@ -80,6 +80,16 @@ class LoanController extends Controller {
                 } elseif ($loan->status == 3) {
                     return show_status(_lang('Cancelled'), 'danger');
                 }
+                elseif ($loan->status == 4) {
+                    return show_status(_lang('Overdue'), 'danger');
+                }
+                elseif ($loan->status == 5) {
+                    return show_status(_lang('Internal'), 'danger');
+                }
+                elseif ($loan->status == 6) {
+                    return show_status(_lang('Bad Debt'), 'danger');
+                }
+                
 
             })
             ->addColumn('action', function ($loan) {
@@ -193,6 +203,7 @@ class LoanController extends Controller {
         $loan->currency_id            = $request->input('currency_id');
         $loan->withdraw_method_id     = $request->input('withdraw_method_id');
         $loan->first_payment_date     = $request->input('first_payment_date');
+        $loan->next_due_date          = $request->input('first_payment_date');
         $loan->release_date           = $request->input('release_date');
         $loan->applied_amount         = ceil_amount($request->input('applied_amount'),$loan_product->ceil_factor);
         $loan->cash_out               = ceil_amount($request->input('cash_out'),$loan_product->ceil_factor);  
@@ -353,7 +364,7 @@ class LoanController extends Controller {
         $transaction->type            = 'Interest';
         $transaction->method          = 'Manual';
         $transaction->status          = 1;
-        $transaction->note            = 'Interest';
+        $transaction->note            = 'Interest '.'('.($loan->loan_product->interest_rate).'%)';
         $transaction->loan_id         = $loan->id;
         $transaction->ip_address      = request()->ip(); 
         $transaction->save();
@@ -517,11 +528,13 @@ class LoanController extends Controller {
         $loan->borrower_id            = $request->input('borrower_id');
         $loan->currency_id            = $request->input('currency_id');
         $loan->first_payment_date     = $request->input('first_payment_date');
+        $loan->next_due_date          = $request->input('first_payment_date');
         $loan->release_date           = $request->input('release_date');
         $loan->applied_amount         = $request->input('applied_amount');
         $loan->cash_out               = $request->input('cash_out');  
         $loan->admin_fee              = ceil_amount($loan->applied_amount * $loan_product->admin_fee/100,$loan->loan_product->ceil_factor);
         $loan->total_interest         = ceil_amount(($loan->applied_amount * $loan_product->interest_rate/100),$loan_product->ceil_factor); 
+        
         if ($request->hasfile('attachment')) {
             $loan->attachment = $attachment;
         }
