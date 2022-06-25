@@ -33,7 +33,7 @@ class CreateLoansTable extends Migration {
             $table->text('description')->nullable();
             $table->text('remarks')->nullable();
             $table->integer('status')->default(0); // 0 - Pending, 1-Approved, 2-Completed, 3-Cancelled, 4-Overdue, 5-Internal,6-Bad-Debts
-            $table->date('default_status')->nullable(); // 0 - No default, 1-By one period/Half Month,2-By 2 periods/1 Month,etc
+            $table->integer('default_status')->default(0); // 0 - No default, 1-By one period/Half Month,2-By 2 periods/1 Month,etc
             $table->date('next_due_date');
             $table->date('approved_date')->nullable();
             $table->bigInteger('approved_user_id')->nullable();
