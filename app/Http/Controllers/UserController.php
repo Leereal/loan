@@ -43,6 +43,7 @@ class UserController extends Controller {
 
         $users = User::select('users.*')
             ->with('branch')
+            ->with('employment_detail')
             ->where('user_type', 'customer')
             ->when($status, function ($query, $status) {
                 if ($status == 'email_verified') {

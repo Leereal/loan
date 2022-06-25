@@ -18,9 +18,9 @@
         console.log(request.responseText);
       },
     },
-    order: [[0, 'asc']],
+    order: [[0, "asc"]],
     columns: [
-      { data: "loan_id", name: "loan_id", orderable: true},
+      { data: "loan_id", name: "loan_id", orderable: true },
       { data: "loan_product.name", name: "loan_product.name" },
       { data: "borrower.name", name: "borrower.name" },
       { data: "release_date", name: "release_date" },
@@ -29,6 +29,10 @@
       { data: "action", name: "action" },
     ],
     responsive: true,
+    // columnDefs: [
+    //   { responsivePriority: 1, targets: 0 },
+    //   { responsivePriority: 2, targets: -1 },
+    // ],
     bStateSave: true,
     bAutoWidth: false,
     ordering: true,
