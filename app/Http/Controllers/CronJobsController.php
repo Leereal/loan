@@ -70,33 +70,40 @@ class CronJobsController extends Controller {
                 foreach($loans as $loan){ //Loop through each loan                    
 
                     //If loan is still in approved level 1 and exceed due date add half_interest 
-                    if ($loan->default_status == 0 && Carbon::now() > $loan->next_due_date) {
-                        
-                        $this->default_charge($loan,1);
+                    if ($loan->default_status == 0 && Carbon::now() > Carbon::parse($loan->next_due_date)->addDays(7)) {
+                        $next_due_date = Carbon::parse($loan->next_due_date)->addDays(21);                        
+                        $this->default_charge($loan,1,$next_due_date);
                     }
-                    else if ($loan->default_status == 1 && Carbon::now() > $loan->next_due_date) {                    
-                        $this->default_charge($loan,2);
+                    else if ($loan->default_status == 1 && Carbon::now() > $loan->next_due_date) {  
+                        $next_due_date = Carbon::parse($loan->first_payment_date)->addMonth(1);                 
+                        $this->default_charge($loan,2,$next_due_date);
                     }
                     else if ($loan->default_status == 2 && Carbon::now() > $loan->next_due_date) {
-                        $this->default_charge($loan,3);
+                        $next_due_date = Carbon::parse($loan->next_due_date)->addDays(21); 
+                        $this->default_charge($loan,3,$next_due_date);
                     }
                     else if ($loan->default_status == 3 && Carbon::now() > $loan->next_due_date) {
-                        $this->default_charge($loan,4);
+                        $next_due_date = Carbon::parse($loan->first_payment_date)->addMonth(2);  
+                        $this->default_charge($loan,4,$next_due_date);
                     }
                     else if ($loan->default_status == 4 && Carbon::now() > $loan->next_due_date) {
-                        $this->default_charge($loan,5);
+                        $next_due_date = Carbon::parse($loan->next_due_date)->addDays(21);                         
+                        $this->default_charge($loan,5,$next_due_date);
                     }
-                    else if ($loan->default_status == 5 && Carbon::now() > $loan->next_due_date) {
-                        $this->default_charge($loan,6);
+                    else if ($loan->default_status == 5 && Carbon::now() > $loan->next_due_date) {//Last Due date setting after this post to overdue
+                        $next_due_date = Carbon::parse($loan->first_payment_date)->addMonth(3);  
+                        $this->default_charge($loan,6,$next_due_date);
                     }
-                    else if ($loan->default_status == 6 && Carbon::now() > $loan->next_due_date) {
-                        $this->default_charge($loan,7);
-                    }
-                    else if ($loan->default_status == 7 && Carbon::now() > $loan->next_due_date) {
-                        $this->default_charge($loan,8);
-                    }
-                    else if ($loan->default_status == 8 && Carbon::now() > $loan->next_due_date) {              
-                        $this->default_charge($loan,8,4);
+                    // else if ($loan->default_status == 6 && Carbon::now() > $loan->next_due_date) {
+                    //     $next_due_date = Carbon::parse($loan->next_due_date)->addDays(14); 
+                    //     $this->default_charge($loan,7,$next_due_date);
+                    // }
+                    // else if ($loan->default_status == 7 && Carbon::now() > $loan->next_due_date) {
+                    //     $next_due_date = Carbon::parse($loan->first_payment_date)->addMonth(4);  
+                    //     $this->default_charge($loan,8,$next_due_date);
+                    // }
+                    else if ($loan->default_status == 6 && Carbon::now() > $loan->next_due_date) {                    
+                        $this->default_charge($loan,7,$loan->next_due_date,4);
                     }
                 }
             DB::commit();
@@ -110,7 +117,7 @@ class CronJobsController extends Controller {
 
     }
 
-    protected function default_charge($loan,$default_status,$status=null){
+    protected function default_charge($loan,$default_status,$next_due_date,$status=null){
          //adding half interest to the loan
          $interest                  = new Transaction();
          $interest->user_id         = $loan->borrower_id;
@@ -138,14 +145,19 @@ class CronJobsController extends Controller {
          $penalty->loan_id         = $loan->id;
          $penalty->ip_address      = request()->ip();
          $penalty->save();
-
+       
          //Update loan balances with new values
-         $loan->late_payment_penalties += ceil_amount(($loan->applied_amount*($loan->loan_product->penalty_fee/100)/2), $loan->loan_product->ceil_factor);
-         $loan->total_payable += $interest->amount + $penalty->amount;
-         $loan->next_due_date =  Carbon::parse($loan->next_due_date)->addDays(15);
-         $loan->default_status = $default_status;
-         $status && $loan->status = $status;
-         $loan->save();
+         if($default_status == 7){        
+            $loan->default_status = $default_status; 
+            $status && $loan->status = $status;
+            $loan->save();
+         }else{
+             $loan->late_payment_penalties += ceil_amount(($loan->applied_amount*($loan->loan_product->penalty_fee/100)/2), $loan->loan_product->ceil_factor);
+             $loan->total_payable += $interest->amount + $penalty->amount;
+             $loan->next_due_date =  $next_due_date;
+             $loan->default_status = $default_status;
+             $loan->save();
+         }
          
     }
 

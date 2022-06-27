@@ -47,7 +47,7 @@
                   <table class="table table-bordered mt-4">
                      <tr>
                         <td>{{ _lang("Loan ID") }}</td>
-                        <td>{{ $loan->loan_id }}</td>
+                        <td><a href="{{ action('LoanController@statement', $loan->id)}}">{{ $loan->loan_id }}</a></td>
                      </tr>
                      <tr>
                         <td>{{ _lang("Borrower") }}</td>

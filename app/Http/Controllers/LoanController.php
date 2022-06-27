@@ -69,6 +69,9 @@ class LoanController extends Controller {
             ->editColumn('applied_amount', function ($loan) {
                 return decimalPlace($loan->applied_amount, currency($loan->currency->name));
             })
+            ->editColumn('total_payable', function ($loan) {
+                return decimalPlace($loan->total_payable, currency($loan->currency->name));
+            })
             ->editColumn('status', function ($loan) {
 
                 if ($loan->status == 0) {

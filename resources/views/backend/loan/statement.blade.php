@@ -168,10 +168,10 @@
                             <table class="table table-striped table-borderless border-0 border-b-2 brc-default-l1">
                                 <thead class="bg-none">
                                     <tr class="text-white">
+                                        <th>Date</th>
                                         <th class="opacity-2">Receipt Number</th>
                                         <th>Transacted By</th>
                                         <th>Description</th>
-                                        <th>Date</th>
                                         <th>Debit</th>
                                         <th>Credit</th>
                                         <th>Balance</th>
@@ -186,10 +186,11 @@
                                     @if ($transaction->type !="Admin_Fee")
 
                                     <tr>
+                                        <td>{{ $transaction->type == 'Interest' ? $transaction->loan->first_payment_date
+                                            : $transaction->created_at}}</td>
                                         <td>{{ $transaction->receipt_number ?? 'N/A' }}</td>
                                         <td>{{ $transaction->created_by->name ?? 'Auto System'}}</td>
                                         <td>{{ $transaction->note }}</td>
-                                        <td>{{ $transaction->created_at}}</td>
                                         <td class="text-95">
                                             @if($transaction->dr_cr=='cr' && $transaction->type == 'Loan_Disbursement')
                                             {{decimalPlace($transaction->loan->applied_amount,currency($transaction->currency->name))}}

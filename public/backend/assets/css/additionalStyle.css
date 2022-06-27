@@ -230,3 +230,7 @@
   #invoice-POS #legalcopy {
     margin-top: 5mm;
   }
+
+  #loans_table{
+    width:100%;
+  }

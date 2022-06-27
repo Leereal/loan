@@ -27,6 +27,7 @@
 							<th>{{ _lang('Borrower') }}</th>
 							<th>{{ _lang('Release Date') }}</th>
 							<th>{{ _lang('Applied Amount') }}</th>
+							<th>{{ _lang('Balance') }}</th>
 							<th>{{ _lang('Status') }}</th>
 							<th class="text-center">{{ _lang('Action') }}</th>
 						</tr>
