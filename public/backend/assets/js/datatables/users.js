@@ -7,7 +7,7 @@
     ajax:
       _url + "/admin/users/get_table_data/" + $("#users_table").data("status"),
     columns: [
-      { data: "profile_picture", name: "profile_picture" },
+      // { data: "profile_picture", name: "profile_picture" },
       { data: "file_number", name: "file_number" },
       { data: "name", name: "name" },
       { data: "id_number", name: "id_number" },
@@ -23,7 +23,7 @@
       { responsivePriority: -1, targets: 0},      
       { responsivePriority: 0, targets: 2 },
       { responsivePriority: 1, targets: 1 },
-      { responsivePriority: 2, targets: 8 },
+      { responsivePriority: 2, targets: 7 },
       { responsivePriority: 3, targets: 3 },
       { responsivePriority: 4, targets: 5 },
     ],
