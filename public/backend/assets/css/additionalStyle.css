@@ -231,6 +231,8 @@
     margin-top: 5mm;
   }
 
-  #loans_table{
-    width:100%;
+  #loans_table, #users_table{
+    width:1400px;
+    white-space: nowrap;
+
   }
