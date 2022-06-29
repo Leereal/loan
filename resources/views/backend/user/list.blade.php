@@ -48,8 +48,6 @@
                             <th>{{ _lang('Employer') }}</th>
                             <th>{{ _lang('Branch') }}</th>
                             <th>{{ _lang('Status') }}</th>
-                            <th>{{ _lang('Email Verified') }}</th>
-                            <th>{{ _lang('SMS Verified') }}</th>
                             <th class="text-center">{{ _lang('Action') }}</th>
                         </tr>
                     </thead>
