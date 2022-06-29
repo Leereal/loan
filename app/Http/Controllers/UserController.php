@@ -76,10 +76,10 @@ class UserController extends Controller {
             ->editColumn('status', function ($user) {
                 return status($user->status);
             })
-            ->addColumn('profile_picture', function ($user) {
-                return '<img class="thumb-sm img-thumbnail"
-				src="' . profile_picture($user->profile_picture) . '">';
-            })
+            // ->addColumn('profile_picture', function ($user) {
+            //     return '<img class="thumb-sm img-thumbnail"
+			// 	src="' . profile_picture($user->profile_picture) . '">';
+            // })
             ->editColumn('email_verified_at', function ($user) {
                 return $user->email_verified_at != null ? show_status(_lang('Yes'), 'primary') : show_status(_lang('No'), 'danger');
             })
