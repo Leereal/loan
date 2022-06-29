@@ -189,7 +189,9 @@
                                         <td>{{ $transaction->type == 'Interest' ? $transaction->loan->first_payment_date
                                             : $transaction->created_at}}</td>
                                         <td>{{ $transaction->receipt_number ?? 'N/A' }}</td>
-                                        <td>{{ $transaction->created_by->name ?? 'Auto System'}}</td>
+                                        <td>{{ $transaction->type == 'Loan_Disbursement' ?
+                                            $transaction->loan->created_by->name : ($transaction->created_by->name ??
+                                            'Auto System')}}</td>
                                         <td>{{ $transaction->note }}</td>
                                         <td class="text-95">
                                             @if($transaction->dr_cr=='cr' && $transaction->type == 'Loan_Disbursement')
