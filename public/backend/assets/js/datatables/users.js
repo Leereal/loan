@@ -7,7 +7,7 @@
     ajax:
       _url + "/admin/users/get_table_data/" + $("#users_table").data("status"),
     columns: [
-      // { data: "profile_picture", name: "profile_picture" },
+      { data: "profile_picture", name: "profile_picture" },
       { data: "file_number", name: "file_number" },
       { data: "name", name: "name" },
       { data: "id_number", name: "id_number" },

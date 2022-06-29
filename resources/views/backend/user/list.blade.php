@@ -40,7 +40,7 @@
                 <table id="users_table" class="table table-bordered" data-status="{{ $status }}">
                     <thead>
                         <tr>
-                            {{-- <th class="text-center">{{ _lang('Profile') }}</th> --}}
+                            <th class="text-center">{{ _lang('Profile') }}</th>
                             <th>{{ _lang('File Number') }}</th>
                             <th>{{ _lang('Name') }}</th>
                             <th>{{ _lang('ID Number') }}</th>
