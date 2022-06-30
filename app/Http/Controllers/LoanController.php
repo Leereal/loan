@@ -170,7 +170,7 @@ class LoanController extends Controller {
         }
 
         //Check if amount is not exceeding the client limit
-        if ($borrower->employment_detail->limit <  $request->applied_amount) {
+        if ($borrower->employment_detail->limit <  $request->applied_amount && $loan_product->salary_limit == "Yes"){
             return back()->with('error', _lang("Sorry, Applied Amount is more than the client's limit"));
         }
 

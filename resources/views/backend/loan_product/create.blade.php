@@ -113,7 +113,19 @@
 									value="{{ old('ceil_factor') }}">
 							</div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">{{ _lang('Salary Maximum Limit') }}</label>
+								<select class="form-control auto-select" data-selected="{{ old('salary_limit',1) }}"
+									name="salary_limit" required>
+									<option value="">{{ _lang('Select One') }}</option>
+									<option value="Yes">{{ _lang('Yes') }}</option>
+									<option value="No">{{ _lang('No') }}</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Status') }}</label>
 								<select class="form-control auto-select" data-selected="{{ old('status',1) }}"

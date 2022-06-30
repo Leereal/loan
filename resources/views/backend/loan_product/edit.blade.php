@@ -115,7 +115,19 @@
 							</div>
 						</div>
 
-						<div class="col-md-12">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label class="control-label">{{ _lang('Salary Maximum Limit') }}</label>
+								<select class="form-control auto-select"
+									data-selected="{{ $loanproduct->salary_limit }}" name="salary_limit" required>
+									<option value="">{{ _lang('Select One') }}</option>
+									<option value="Yes">{{ _lang('Yes') }}</option>
+									<option value="No">{{ _lang('No') }}</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="col-md-6">
 							<div class="form-group">
 								<label class="control-label">{{ _lang('Status') }}</label>
 								<select class="form-control auto-select" data-selected="{{ $loanproduct->status }}"
