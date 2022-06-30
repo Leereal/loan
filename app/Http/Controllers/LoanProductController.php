@@ -59,6 +59,7 @@ class LoanProductController extends Controller {
             'term'           => 'required|integer',
             'term_period'    => 'required',
             'status'         => 'required',
+            'salary_limit'   => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -85,6 +86,7 @@ class LoanProductController extends Controller {
         $loanproduct->term           = $request->input('term');
         $loanproduct->term_period    = $request->input('term_period');
         $loanproduct->status         = $request->input('status');
+        $loanproduct->salary_limit   = $request->input('salary_limit');
         $loanproduct->ip_address     = request()->ip();
 
         $loanproduct->save();
@@ -153,6 +155,7 @@ class LoanProductController extends Controller {
             'term'           => 'required|integer',
             'term_period'    => 'required',
             'status'         => 'required',
+            'salary_limit'   => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -179,6 +182,8 @@ class LoanProductController extends Controller {
         $loanproduct->term           = $request->input('term');
         $loanproduct->term_period    = $request->input('term_period');
         $loanproduct->status         = $request->input('status');
+        $loanproduct->salary_limit   = $request->input('salary_limit');
+
 
         $loanproduct->save();
 
