@@ -36,7 +36,7 @@ class DashboardController extends Controller {
             $data['active_fdr']      = FixedDeposit::where('status', 1)->where('user_id', auth()->id())->count();
             $data['payment_request'] = PaymentRequest::where('status', 1)->where('receiver_id', auth()->id())->count();
 
-            $data['recent_transactions'] = Transaction::where('user_id', auth()->id())
+            $data['recent_transactions'] = Transaction::where([['user_id', auth()->id()],['status',0]])
                 ->with('currency')
                 ->limit(10)
                 ->orderBy('id', 'desc')

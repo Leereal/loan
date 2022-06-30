@@ -158,8 +158,8 @@
 </div>
 
 
-@if (in_array('dashboard.recent_transaction_widget',$permissions))
-<div class="row">
+{{-- @if (in_array('dashboard.recent_transaction_widget',$permissions)) --}}
+{{-- <div class="row">
 	<div class="col-lg-12">
 		<div class="card mb-4">
 			<div class="card-header">
@@ -176,13 +176,13 @@
 								{{-- <th>{{ _lang('Charge') }}</th>
 								<th>{{ _lang('Grand Total') }}</th>
 								<th>{{ _lang('DR/CR') }}</th> --}}
-								<th>{{ _lang('Type') }}</th>
+								{{-- <th>{{ _lang('Type') }}</th>
 								<th>{{ _lang('Method') }}</th>
 								<th>{{ _lang('Status') }}</th>
 							</tr>
 						</thead>
-						<tbody>
-							@foreach($recent_transactions as $transaction)
+						<tbody> --}}
+							{{-- @foreach($recent_transactions as $transaction)
 							@php
 							$symbol = $transaction->dr_cr == 'dr' ? '-' : '+';
 							$class = $transaction->dr_cr == 'dr' ? 'text-danger' : 'text-success';
@@ -196,24 +196,25 @@
 								@else
 								<td>{{ decimalPlace(($transaction->amount + $transaction->fee),
 									currency($transaction->currency->name)) }}</td>
-								@endif
+								@endif --}}
 								{{-- <td>{{ $transaction->dr_cr == 'dr' ? '+ '.decimalPlace($transaction->fee,
 									currency($transaction->currency->name)) : '- '.decimalPlace($transaction->fee,
 									currency($transaction->currency->name)) }}</td>
 								<td><span class="{{ $class }}">{{ $symbol.' '.decimalPlace($transaction->amount,
 										currency($transaction->currency->name)) }}</span></td>
 								<td>{{ strtoupper($transaction->dr_cr) }}</td> --}}
-								<td>{{ str_replace('_',' ',$transaction->type) }}</td>
+								{{-- <td>{{ str_replace('_',' ',$transaction->type) }}</td>
 								<td>{{ $transaction->method }}</td>
 								<td>{!! xss_clean(transaction_status($transaction->status)) !!}</td>
-							</tr>
-							@endforeach
+							</tr> --}}
+							{{-- @endforeach --}}
+							{{--
 						</tbody>
 					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-@endif
+</div> --}}
+{{-- @endif --}}
 @endsection
