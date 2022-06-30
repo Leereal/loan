@@ -43,7 +43,7 @@ class BankingDetailController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'user_id'               => 'required|numeric',
-            'withdraw_method_id'    => 'required|numeric',
+            // 'withdraw_method_id'    => 'required|numeric',
             'name'                  => 'required',
             'branch'                => 'nullable',
             'account_type'          => 'nullable',
@@ -62,7 +62,7 @@ class BankingDetailController extends Controller
 
         $banking_detail                                  = new BankingDetail();
         $banking_detail->user_id                         = $request->input('user_id');
-        $banking_detail->withdraw_method_id              = $request->input('withdraw_method_id');
+        // $banking_detail->withdraw_method_id              = $request->input('withdraw_method_id');
         $banking_detail->name                            = $request->input('name');
         $banking_detail->branch                          = $request->input('branch');
         $banking_detail->account_type                    = $request->input('account_type');
