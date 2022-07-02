@@ -17,6 +17,7 @@
                             <th>{{ _lang('Description') }}</th>
                             <th>{{ _lang('Type') }}</th>
                             <th>{{ _lang('Amount') }}</th>
+                            <th>{{ _lang('Payment Method') }}</th>
                             <th>{{ _lang('Created By') }}</th>
                             <th>{{ _lang('Branch') }}</th>
                             <th class="text-center">{{ _lang('Action') }}</th>
@@ -30,6 +31,7 @@
                             <td class='type'>{{ $expense->type}}
                             </td>
                             <td class='amount'>{{ $expense->amount}}</td>
+                            <td class='amount'>{{ $expense->payment_method->name}}</td>
                             <td class='created_by'>{{ $expense->created_by->name }}</td>
                             <td class='branch'>{{ $expense->branch->name }}</td>
 

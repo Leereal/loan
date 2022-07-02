@@ -117,6 +117,9 @@
 		@if (in_array('transactions.index',$permissions))
 		<a class="nav-link" href="{{ route('transactions.index') }}">{{ _lang('All Transactions') }}</a>
 		@endif
+		@if (in_array('transactions.index',$permissions))
+		<a class="nav-link" href="{{ route('transactions.summary') }}">{{ _lang('Daily Summary') }}</a>
+		@endif
 		@if (in_array('registers.index',$permissions))
 		<a class="nav-link" href="{{ route('registers.index') }}">{{ _lang('Registers Summary') }}</a>
 		@endif
