@@ -17,7 +17,7 @@
                                 <label class="control-label">{{ _lang('Type') }}</label>
                                 <select class="form-control auto-select" data-selected="{{ old('type') }}" name="type"
                                     required>
-                                    <option value="cash_issued_in">{{ _lang('Cash Issued In') }}</option>
+                                    <option value="issued_in">{{ _lang('Issued In') }}</option>
                                     <option value="other">{{ _lang('Other') }}</option>
                                 </select>
                             </div>
@@ -42,6 +42,20 @@
                         </div>
 
                         <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">{{ _lang('Payment Method') }}</label>
+                                <select class="form-control auto-select" data-selected="{{ old('payment_method_id') }}"
+                                    name="payment_method" required>
+                                    <option value="">Select Method</option>
+                                    @foreach ($payment_methods as $payment_method )
+                                    <option value="{{ $payment_method->id }}">{{ _lang($payment_method->name) }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
                             <div class="form-group">
                                 <label class="control-label">{{ _lang('Amount')}}</label>
                                 <input type="text" class="form-control float-field" name="amount"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Income;
+use App\Models\WithdrawMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -28,10 +29,11 @@ class IncomeController extends Controller
      */
     public function create(Request $request)
     {
+        $payment_methods = WithdrawMethod::all();
         if (!$request->ajax()) {
-            return view('backend.income.create');
+            return view('backend.income.create',compact('payment_methods'));
         } else {
-            return view('backend.income.modal.create');
+            return view('backend.income.modal.create',compact('payment_methods'));
         }
     }
 
@@ -62,6 +64,7 @@ class IncomeController extends Controller
         $income->amount             = $request->input('amount');      
         $income->description        = $request->input('description');
         $income->currency_id        = $request->input('currency_id');
+        $income->withdraw_method_id = $request->input('payment_method');
         $income->type               = $request->input('type');
         $income->created_user_id    = Auth::id();
         $income->ip_address         = request()->ip();
@@ -98,11 +101,12 @@ class IncomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, $id) {
+        $payment_methods = WithdrawMethod::all(); 
         $income = Income::find($id);
         if (!$request->ajax()) {
-            return view('backend.income.edit', compact('income', 'id'));
+            return view('backend.income.edit', compact('income', 'id','payment_methods'));
         } else {
-            return view('backend.income.modal.edit', compact('income', 'id'));
+            return view('backend.income.modal.edit', compact('income', 'id','payment_methods'));
         }
 
     }
@@ -136,6 +140,7 @@ class IncomeController extends Controller
         $income->amount             = $request->input('amount');      
         $income->description        = $request->input('description');
         $income->currency_id        = $request->input('currency_id');
+        $income->withdraw_method_id = $request->input('payment_method');
         $income->type               = $request->input('type');
         $income->updated_user_id    = Auth::id();
         $income->ip_address         = request()->ip(); 

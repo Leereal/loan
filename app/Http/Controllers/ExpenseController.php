@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Expense;
+use App\Models\WithdrawMethod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -28,10 +29,11 @@ class ExpenseController extends Controller
      */
     public function create(Request $request)
     {
+        $payment_methods = WithdrawMethod::all();
         if (!$request->ajax()) {
-            return view('backend.expense.create');
+            return view('backend.expense.create',compact('payment_methods'));
         } else {
-            return view('backend.expense.modal.create');
+            return view('backend.expense.modal.create',compact('payment_methods'));
         }
     }
 
@@ -62,6 +64,7 @@ class ExpenseController extends Controller
         $expense->amount             = $request->input('amount');      
         $expense->description        = $request->input('description');
         $expense->currency_id        = $request->input('currency_id');
+        $expense->withdraw_method_id = $request->input('payment_method');
         $expense->type               = $request->input('type');
         $expense->created_user_id    = Auth::id();
         $expense->ip_address         = request()->ip();
@@ -98,9 +101,10 @@ class ExpenseController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Request $request, $id) {
+        $payment_methods = WithdrawMethod::all(); 
         $expense = Expense::find($id);
         if (!$request->ajax()) {
-            return view('backend.expense.edit', compact('expense', 'id'));
+            return view('backend.expense.edit', compact('expense', 'id','payment_methods'));
         } else {
             return view('backend.expense.modal.edit', compact('expense', 'id'));
         }
@@ -136,6 +140,7 @@ class ExpenseController extends Controller
         $expense->amount             = $request->input('amount');      
         $expense->description        = $request->input('description');
         $expense->currency_id        = $request->input('currency_id');
+        $expense->withdraw_method_id = $request->input('payment_method');
         $expense->type               = $request->input('type');
         $expense->updated_user_id    = Auth::id();
         $expense->ip_address         = request()->ip(); 

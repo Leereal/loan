@@ -136,7 +136,7 @@
 
 @media print{
     * { margin: 0 !important; padding: 0 !important; }    
-    .btn{ display:none;}
+    .btn, .no-print{ display:none;}
   }
 
   /* Print Receipt CSS */
@@ -236,3 +236,6 @@
     white-space: nowrap;
 
   }
+.summary td{
+  white-space: nowrap;
+}

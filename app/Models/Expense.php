@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Expense extends Model
 {
     use HasFactory, SoftDeletes;
+
+    public function payment_method() {
+        return $this->belongsTo('App\Models\WithdrawMethod', 'withdraw_method_id')->withDefault();
+    }
+
     
     public function currency() {
         return $this->belongsTo('App\Models\Currency', 'currency_id')->withDefault();

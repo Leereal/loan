@@ -21,7 +21,7 @@ class CreateIncomesTable extends Migration
             $table->text('description')->nullable();
             $table->bigInteger('created_user_id')->nullable();
             $table->bigInteger('updated_user_id')->nullable();
-            $table->bigInteger('branch_id')->nullable();
+            $table->bigInteger('branch_id')->nullable();            
             $table->ipAddress('ip_address');
             $table->softDeletes();
             $table->timestamps();
