@@ -200,6 +200,12 @@ Route::middleware(['install'])->group(function () use ($email_verification, $all
             //Loan Product Controller
             Route::resource('loan_products', 'LoanProductController');
 
+            //Income Controller
+            Route::resource('incomes', 'IncomeController');
+
+            //Expenses Controller
+            Route::resource('expenses', 'ExpenseController');
+
             //Loan Controller
             Route::post('loans/get_table_data', 'LoanController@get_table_data');
             // Route::get('loans/calculator', 'LoanController@calculator')->name('loans.calculator');         

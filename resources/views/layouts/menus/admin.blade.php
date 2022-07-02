@@ -21,6 +21,30 @@
 		<a class="nav-link" href="{{ route('users.filter') }}/sms_unverified">{{ _lang('SMS Unverified') }}</a> --}}
 	</nav>
 </div>
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#income" aria-expanded="false"
+	aria-controls="collapseLayouts">
+	<div class="sb-nav-link-icon"><i class="icofont-money"></i></div>
+	{{ _lang('Income') }}
+	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
+</a>
+<div class="collapse" id="income" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+	<nav class="sb-sidenav-menu-nested nav">
+		<a class="nav-link" href="{{ route('incomes.create') }}">{{ _lang('Add Income') }}</a>
+		<a class="nav-link" href="{{ route('incomes.index') }}">{{ _lang('All Income') }}</a>
+	</nav>
+</div>
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#expense" aria-expanded="false"
+	aria-controls="collapseLayouts">
+	<div class="sb-nav-link-icon"><i class="icofont-ui-rate-remove"></i></div>
+	{{ _lang('Expenses') }}
+	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
+</a>
+<div class="collapse" id="expense" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+	<nav class="sb-sidenav-menu-nested nav">
+		<a class="nav-link" href="{{ route('expenses.create') }}">{{ _lang('Add Expense') }}</a>
+		<a class="nav-link" href="{{ route('expenses.index') }}">{{ _lang('All Expenses') }}</a>
+	</nav>
+</div>
 {{--
 <a class="nav-link" href="{{ route('transfer_requests.index') }}">
 	<div class="sb-nav-link-icon"><i class="icofont-bank-transfer-alt"></i></div>
