@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Branch;
+use App\Models\Currency;
 use App\Models\Setting;
 use App\Models\Transaction;
+use App\Models\WithdrawMethod;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -79,6 +82,14 @@ class TransactionController extends Controller {
             })
             ->rawColumns(['user.name', 'status', 'amount', 'action'])
             ->make(true);
+    }
+
+    public function summary(){
+        $currencies     = Currency::where('status',1)->get();
+        $branches       = Branch::all();
+        $payment_methods= WithdrawMethod::where('status',1)->get();
+        $transactions = Transaction::where('status',2)->get();
+        return view('backend.transactions.summary', compact('transactions','currencies', 'branches','payment_methods'));
     }
 
 }

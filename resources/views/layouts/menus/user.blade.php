@@ -148,6 +148,38 @@
 		@endif
 	</nav>
 </div>
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#income" aria-expanded="false"
+	aria-controls="collapseLayouts">
+	<div class="sb-nav-link-icon"><i class="icofont-money"></i></div>
+	{{ _lang('Income') }}
+	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
+</a>
+<div class="collapse" id="income" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+	<nav class="sb-sidenav-menu-nested nav">
+		@if (in_array('incomes.create',$permissions))
+		<a class="nav-link" href="{{ route('incomes.create') }}">{{ _lang('Add Income') }}</a>
+		@endif
+		@if (in_array('incomes.index',$permissions))
+		<a class="nav-link" href="{{ route('incomes.index') }}">{{ _lang('All Income') }}</a>
+		@endif
+	</nav>
+</div>
+<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#expense" aria-expanded="false"
+	aria-controls="collapseLayouts">
+	<div class="sb-nav-link-icon"><i class="icofont-ui-rate-remove"></i></div>
+	{{ _lang('Expenses') }}
+	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
+</a>
+<div class="collapse" id="expense" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+	<nav class="sb-sidenav-menu-nested nav">
+		@if (in_array('expenses.create',$permissions))
+		<a class="nav-link" href="{{ route('expenses.create') }}">{{ _lang('Add Expense') }}</a>
+		@endif
+		@if (in_array('expenses.index',$permissions))
+		<a class="nav-link" href="{{ route('expenses.index') }}">{{ _lang('All Expenses') }}</a>
+		@endif
+	</nav>
+</div>
 {{--
 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#fdr" aria-expanded="false"
 	aria-controls="collapseLayouts">
