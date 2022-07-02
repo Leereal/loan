@@ -81,6 +81,7 @@
 <div class="collapse" id="reports" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 	<nav class="sb-sidenav-menu-nested nav">
 		<a class="nav-link" href="{{ route('transactions.index') }}">{{ _lang('All Transactions') }}</a>
+		<a class="nav-link" href="{{ route('transactions.summary') }}">{{ _lang('Daily Summary') }}</a>
 		<a class="nav-link" href="{{ route('registers.index') }}">{{ _lang('Registers Summary') }}</a>
 		<a class="nav-link" href="{{ route('registers.view') }}">{{ _lang('Registers') }}</a>
 	</nav>

@@ -189,6 +189,7 @@ Route::middleware(['install'])->group(function () use ($email_verification, $all
             //All transactions
             Route::post('transactions/get_table_data', 'TransactionController@get_table_data');
             Route::get('transactions', 'TransactionController@index')->name('transactions.index');
+            Route::get('transactions/summary', 'TransactionController@summary')->name('transactions.summary');
 
             //Registers
             Route::post('registers/get_table_data', 'RegistersController@get_table_data');
