@@ -794,4 +794,11 @@ class LoanController extends Controller {
         }
                                 
     }
+
+    public function pending()
+    {
+        $loans = Loan::where('status',0)->get();
+        return view('backend.loan.pending', compact('loans'));
+    }
+
 }

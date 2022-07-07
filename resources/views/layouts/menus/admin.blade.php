@@ -93,6 +93,8 @@
 </a>
 <div class="collapse" id="loans" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 	<nav class="sb-sidenav-menu-nested nav">
+		<a class="nav-link" href="{{ route('loans.pending') }}">{{ _lang('Pending Approval') }}{!!
+			xss_clean(request_count('pending_loans',true)) !!}</a>
 		<a class="nav-link" href="{{ route('loans.create') }}">{{ _lang('Disburse Loan') }}</a>
 		<a class="nav-link" href="{{ route('loans.index') }}">{{ _lang('Repay Loan') }}</a>
 		<a class="nav-link" href="{{ route('loans.index') }}">{{ _lang('View Loans') }}</a>

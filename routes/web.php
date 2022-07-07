@@ -220,6 +220,7 @@ Route::middleware(['install'])->group(function () use ($email_verification, $all
             Route::get('loans/approve/{id}', 'LoanController@approve')->name('loans.approve');
             Route::get('loans/reject/{id}', 'LoanController@reject')->name('loans.reject');
             Route::get('loans/statement/{id}', 'LoanController@statement')->name('loans.statement');
+            Route::get('loans/pending', 'LoanController@pending')->name('loans.pending');
             Route::resource('loans', 'LoanController');
 
             //Loan Collateral Controller

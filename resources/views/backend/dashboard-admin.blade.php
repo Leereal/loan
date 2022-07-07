@@ -92,7 +92,7 @@
 			<div class="card-body">
 				<div class="d-flex">
 					<div class="flex-grow-1">
-						<h5>{{ _lang('Loan Requests') }}</h5>
+						<h5>{{ _lang('Pending Loans ') }}</h5>
 						<h6 class="pt-1 mb-0"><b>{{ request_count('pending_loans') }}</b></h6>
 					</div>
 					<div>
