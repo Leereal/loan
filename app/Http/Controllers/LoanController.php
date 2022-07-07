@@ -96,7 +96,7 @@ class LoanController extends Controller {
 
             })
             ->addColumn('action', function ($loan) {
-                $actions = '<form action="' . action('LoanController@destroy', $loan['id']) . '" class="text-center" method="post">';
+                $actions = '<form action="' . action('ReversalController@loanDisbursementReversal', $loan['id']) . '" class="text-center" method="post">';
                 if($loan->status != 2){               
                     $actions .= '<a href="' . action('LoanController@repay', $loan['id']) . '" class="btn btn-primary btn-sm">' . _lang('Make Payment') . '</a>&nbsp;';
                 }
@@ -104,7 +104,7 @@ class LoanController extends Controller {
                 . '<a href="' . action('LoanController@edit', $loan['id']) . '" class="btn btn-warning btn-sm">' . _lang('Edit') . '</a>&nbsp;'
                 . csrf_field()
                 . '<input name="_method" type="hidden" value="DELETE">'
-                . '<button class="btn btn-danger btn-sm btn-remove" type="submit">' . _lang('Delete') . '</button>'
+                . '<button class="btn btn-danger btn-sm btn-remove" type="submit">' . _lang('Reverse') . '</button>'
                     . '</form>';
                 return $actions;
             })

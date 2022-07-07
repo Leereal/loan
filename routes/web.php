@@ -203,6 +203,10 @@ Route::middleware(['install'])->group(function () use ($email_verification, $all
             //Income Controller
             Route::resource('incomes', 'IncomeController');
 
+            //Reversals Controller
+            Route::get('reversals', 'ReversalController@index')->name('reversals.index');
+            Route::delete('/reversals/{id}', 'ReversalController@loanDisbursementReversal')->name('reversals.loan_disbursement_reversal');
+
             //Expenses Controller
             Route::resource('expenses', 'ExpenseController');
 

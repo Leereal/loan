@@ -4,7 +4,10 @@
 	<div class="sb-nav-link-icon"><i class="icofont-dashboard-web"></i></div>
 	{{ _lang('Dashboard') }}
 </a>
-
+<a class="nav-link" href="{{ route('reversals.index') }}">
+	<div class="sb-nav-link-icon"><i class="icofont-delete"></i></div>
+	{{ _lang('Reversals') }}
+</a>
 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#users" aria-expanded="false"
 	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-users-alt-3"></i></div>
