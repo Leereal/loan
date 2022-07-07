@@ -96,7 +96,8 @@
 						<h6 class="pt-1 mb-0"><b>{{ request_count('pending_loans') }}</b></h6>
 					</div>
 					<div>
-						<a href="{{ route('loans.index') }}"><i class="icofont-arrow-right"></i>{{ _lang('View') }}</a>
+						<a href="{{ route('loans.pending') }}"><i class="icofont-arrow-right"></i>{{ _lang('View')
+							}}</a>
 					</div>
 				</div>
 			</div>
