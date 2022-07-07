@@ -33,7 +33,7 @@ class RegistersController extends Controller
      */
     public function index() {     
         $currencies     = Currency::where('status',1)->get();
-        $branches       = Branch::where('status',1)->get();
+        $branches       = Branch::all();
         $ages            = ["Current","1 Month","2 Months","3 Months","3 to < 6 Months","6 to 12 Months","+1 Year"];
    
         return view('backend.reports.registers.list', compact('currencies', 'branches','ages'));
