@@ -8,11 +8,12 @@
             <div class="card-header d-flex align-items-center">
                 <h4 class="header-title">{{ _lang('User List') }}</h4>
                 <a class="btn btn-primary btn-sm ml-auto ajax-modal" data-title="{{ _lang('Create System User') }}"
-                    href="{{ route('system_users.create') }}"><i class="icofont-plus-circle"></i> {{ _lang('Add New') }}</a>
+                    href="{{ route('system_users.create') }}"><i class="icofont-plus-circle"></i> {{ _lang('Add New')
+                    }}</a>
             </div>
 
             <div class="card-body">
-                <table id="users_table" class="table table-bordered data-table">
+                <table id="system_users_table" class="table table-bordered data-table no-fixed-width">
                     <thead>
                         <tr>
                             <th class="text-center">#</th>
@@ -41,7 +42,8 @@
                                         id="dropdownMenuButton" data-toggle="dropdown">
                                         {{ _lang('Action') }}
                                     </button>
-                                    <form action="{{ action('SystemUserController@destroy', $user['id']) }}" method="post">
+                                    <form action="{{ action('SystemUserController@destroy', $user['id']) }}"
+                                        method="post">
                                         {{ csrf_field() }}
                                         <input name="_method" type="hidden" value="DELETE">
 
