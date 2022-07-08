@@ -65,7 +65,7 @@ class UserController extends Controller {
         return Datatables::eloquent($users)
             ->filter(function ($query){
 
-                if(get_setting(Setting::get(),'branch_view')== 'enabled' && Auth::user()->user_type != 'admin' ){
+                if(get_setting(Setting::get(),'branch_view')== 'enabled' && (auth()->user()->role->multiple_branch == 0) ){
                     $query->where('users.branch_id', Auth::user()->branch->id);                    
                 }
             }, true)

@@ -49,6 +49,7 @@ class RoleController extends Controller {
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
             'name'        => 'required|max:50',
+            'multiple_branch'        => 'required',
             'description' => '',
         ]);
 
@@ -62,9 +63,10 @@ class RoleController extends Controller {
             }
         }
 
-        $role              = new Role();
-        $role->name        = $request->input('name');
-        $role->description = $request->input('description');
+        $role                   = new Role();
+        $role->name             = $request->input('name');
+        $role->multiple_branch  = $request->input('multiple_branch');
+        $role->description      = $request->input('description');
 
         $role->save();
 
@@ -118,6 +120,7 @@ class RoleController extends Controller {
     public function update(Request $request, $id) {
         $validator = Validator::make($request->all(), [
             'name'        => 'required|max:50',
+            'multiple_branch'        => 'required',
             'description' => '',
         ]);
 
@@ -131,9 +134,10 @@ class RoleController extends Controller {
             }
         }
 
-        $role              = Role::find($id);
-        $role->name        = $request->input('name');
-        $role->description = $request->input('description');
+        $role                       = Role::find($id);
+        $role->name                 = $request->input('name');
+        $role->multiple_branch      = $request->input('multiple_branch');
+        $role->description          = $request->input('description');
 
         $role->save();
 

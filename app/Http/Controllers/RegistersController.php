@@ -162,7 +162,7 @@ class RegistersController extends Controller
 
             ->filter(function ($query) use ($request) {
 
-                if(get_setting(Setting::get(),'branch_view')== 'enabled' && Auth::user()->user_type != 'admin' ){
+                if(get_setting(Setting::get(),'branch_view')== 'enabled' && (auth()->user()->role->multiple_branch == 0) ){
                     $query->where('loans.branch_id', Auth::user()->branch->id);                    
                 }
       

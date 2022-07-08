@@ -29,7 +29,10 @@ class DashboardController extends Controller {
     public function index() {
         $user      = auth()->user();
         $user_type = $user->user_type;
-        $data      = array();
+        $data      = array(); 
+        
+        
+
         if ($user_type == 'customer') {
             $data['active_tickets']  = SupportTicket::where('status', 1)->where('user_id', auth()->id())->count();
             $data['loans']           = Loan::where('status', 1)->where('borrower_id', auth()->id())->get();
@@ -47,8 +50,16 @@ class DashboardController extends Controller {
             FROM transactions WHERE dr_cr = 'dr' AND currency_id = currency.id AND transactions.user_id = " . $user->id . ") as balance
             FROM currency LEFT JOIN transactions ON currency.id=transactions.currency_id WHERE currency.status=1 GROUP BY currency.id");
         } else {
-            $data['active_customer']     = User::where('user_type', 'customer')->where('status', 1)->count();
-            $data['inactive_customer']   = User::where('user_type', 'customer')->where('status', 0)->count();
+            $query = User::query();
+            auth()->user()->role->multiple_branch == 0 ?? $query = $query->where('branch_id',auth()->user()->branch_id);
+            $query = $query->where([['status', 1],['user_type', 'customer']]);
+            $data['active_customer']     = $query->count();
+            
+            $query2 = User::query();
+            auth()->user()->role->multiple_branch == 0 ?? $query2 = $query2->where('branch_id',auth()->user()->branch_id);
+            $query2 = $query2->where([['status', 0],['user_type', 'customer']]);
+            $data['inactive_customer']   = $query2->count();
+            
             $data['recent_transactions'] = Transaction::limit(10)
                 ->with('currency')
                 ->orderBy('id', 'desc')

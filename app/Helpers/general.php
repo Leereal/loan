@@ -766,6 +766,16 @@ if (!function_exists('status')) {
     }
 }
 
+if (!function_exists('allowStatus')) {
+    function allowStatus($status) {
+        if ($status == 1) {
+            return _lang('Allowed');
+        } else if ($status == 0) {
+            return _lang('Denied');
+        }
+    }
+}
+
 if (!function_exists('transaction_status')) {
     function transaction_status($status) {      
         return match($status){
