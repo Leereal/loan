@@ -51,12 +51,12 @@ class DashboardController extends Controller {
             FROM currency LEFT JOIN transactions ON currency.id=transactions.currency_id WHERE currency.status=1 GROUP BY currency.id");
         } else {
             $query = User::query();
-            auth()->user()->role->multiple_branch == 0 ?? $query = $query->where('branch_id',auth()->user()->branch_id);
+            if(auth()->user()->role->multiple_branch == 0){$query = $query->where('branch_id',auth()->user()->branch_id);};
             $query = $query->where([['status', 1],['user_type', 'customer']]);
             $data['active_customer']     = $query->count();
             
             $query2 = User::query();
-            auth()->user()->role->multiple_branch == 0 ?? $query2 = $query2->where('branch_id',auth()->user()->branch_id);
+            if(auth()->user()->role->multiple_branch == 0){$query2 = $query2->where('branch_id',auth()->user()->branch_id);};
             $query2 = $query2->where([['status', 0],['user_type', 'customer']]);
             $data['inactive_customer']   = $query2->count();
             

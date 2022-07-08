@@ -22,6 +22,7 @@
                             <th>{{ _lang('User Type') }}</th>
                             <th>{{ _lang('Role') }}</th>
                             <th>{{ _lang('Status') }}</th>
+                            <th>{{ _lang('Branch') }}</th>
                             <th class="text-center">{{ _lang('Action') }}</th>
                         </tr>
                     </thead>
@@ -36,6 +37,7 @@
                             <td class='user_type'>{{ strtoupper($user->user_type) }}</td>
                             <td class='role_id'>{{ $user->role->name }}</td>
                             <td class='status'>{!! xss_clean(status($user->status)) !!}</td>
+                            <td class='branch'>{{ $user->branch->name }}</td>
                             <td class="text-center">
                                 <span class="dropdown">
                                     <button class="btn btn-primary dropdown-toggle btn-sm" type="button"
