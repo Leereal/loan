@@ -135,11 +135,17 @@
 	aria-controls="collapseLayouts">
 	<div class="sb-nav-link-icon"><i class="icofont-dollar-minus"></i></div>
 	{{ _lang('Loan Management') }}
+	@if (in_array('loans.approve',$permissions))
 	{!! xss_clean(request_count('pending_loans',true)) !!}
+	@endif
 	<div class="sb-sidenav-collapse-arrow"><i class="icofont-rounded-down"></i></div>
 </a>
 <div class="collapse" id="loans" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
 	<nav class="sb-sidenav-menu-nested nav">
+		@if (in_array('loans.approve',$permissions))
+		<a class="nav-link" href="{{ route('loans.pending') }}">{{ _lang('Pending Approval') }}{!!
+			xss_clean(request_count('pending_loans',true)) !!}</a>
+		@endif
 		@if (in_array('loans.index',$permissions))
 		<a class="nav-link" href="{{ route('loans.index') }}">{{ _lang('All Loans') }}</a>
 		@endif
