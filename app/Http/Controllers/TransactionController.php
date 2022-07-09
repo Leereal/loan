@@ -32,14 +32,6 @@ class TransactionController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $trans = Transaction::all();
-        foreach ($trans as $tran){
-            $tran->update(['branch_id' => $tran->loan->branch_id]);
-        }
-        
-
-        
-
         $transactions = Transaction::select('type','note')->distinct()->get();    
         return view('backend.transactions.list', compact('transactions'));
     }
