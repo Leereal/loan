@@ -52,7 +52,6 @@
       { data: "currency.name", name: "currency.name" },
       { data: "dr_cr", name: "dr_cr" },
       { data: "type", name: "type" },
-      { data: "method", name: "method" },
       { data: "amount", name: "amount" },
       { data: "status", name: "status" },
       { data: "action", name: "action" },
