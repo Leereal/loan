@@ -1024,7 +1024,11 @@ if (!function_exists('request_count')) {
         if ($request == 'pending_tickets') {
             $notification_count = \App\Models\SupportTicket::where('status', 0)->count();
         } else if ($request == 'pending_loans') {
-            $notification_count = \App\Models\Loan::where('status', 0)->count();
+            $query = \App\Models\Loan::query(); 
+            $query->where('status', 0);  
+            if(auth()->user()->role->multiple_branch == 0){$query = $query->where('branch_id',auth()->user()->branch_id);};         
+            $notification_count = $query->count();
+
         } else if ($request == 'deposit_requests') {
             $notification_count = \App\Models\DepositRequest::where('status', 1)->count();
         } else if ($request == 'withdraw_requests') {
