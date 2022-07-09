@@ -42,11 +42,12 @@ class TransactionController extends Controller {
             ->with('currency')
             ->orderBy("transactions.id", "desc");
 
+            if(get_setting(Setting::get(),'branch_view')== 'enabled' && (auth()->user()->role->multiple_branch == 0) ){
+                $transactions->where('transactions.branch_id', Auth::user()->branch->id);                    
+            }        
+
         return Datatables::eloquent($transactions)
-            ->filter(function ($query) use ($request) {
-                if(get_setting(Setting::get(),'branch_view')== 'enabled' && (auth()->user()->role->multiple_branch == 0) ){
-                    $query->where('transactions.branch_id', Auth::user()->branch->id);                    
-                }
+            ->filter(function ($query) use ($request) {                
                 if ($request->has('status')) {
                     $query->where('status', $request->status);
                 }
