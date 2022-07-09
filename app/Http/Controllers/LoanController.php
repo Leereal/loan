@@ -367,7 +367,7 @@ class LoanController extends Controller {
         $transaction->dr_cr           = 'cr';
         $transaction->type            = 'Interest';
         $transaction->method          = 'Manual';
-        $transaction->status          = 1;
+        $transaction->status          = 2;
         $transaction->note            = 'Interest '.'('.($loan->loan_product->interest_rate).'%)';
         $transaction->loan_id         = $loan->id;
         $transaction->branch_id       = $loan->branch_id;
@@ -383,7 +383,7 @@ class LoanController extends Controller {
             $transaction->dr_cr           = 'cr';
             $transaction->type            = 'Service_Fee';
             $transaction->method          = 'Manual';
-            $transaction->status          = 1;
+            $transaction->status          = 2;
             $transaction->note            = 'Service Fee';
             $transaction->loan_id         = $loan->id;
             $transaction->branch_id       = $loan->branch_id;
