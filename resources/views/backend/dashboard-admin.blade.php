@@ -150,13 +150,11 @@
 					<tr>
 						<th>{{ _lang('Date') }}</th>
 						<th>{{ _lang('Currency') }}</th>
-						<th>{{ _lang('Amount') }}</th>
-						{{-- <th>{{ _lang('Charge') }}</th>
-						<th>{{ _lang('Grand Total') }}</th>
-						<th>{{ _lang('DR/CR') }}</th> --}}
+						<th>{{ _lang('Client Name') }}</th>
 						<th>{{ _lang('Type') }}</th>
-						<th>{{ _lang('Method') }}</th>
-						<th>{{ _lang('Status') }}</th>
+						<th>{{ _lang('Amount') }}</th>
+						<th>{{ _lang('Mode of Payment') }}</th>
+						{{-- <th>{{ _lang('Status') }}</th> --}}
 					</tr>
 				</thead>
 				<tbody>
@@ -168,6 +166,8 @@
 					<tr>
 						<td>{{ \Carbon\Carbon::parse($transaction->created_at)->diffForHumans() }}</td>
 						<td>{{ $transaction->currency->name }}</td>
+						<td>{{ $transaction->user->name }}</td>
+						<td>{{ str_replace('_',' ',$transaction->type) }}</td>
 						@if($transaction->dr_cr == 'dr')
 						<td>{{ decimalPlace(($transaction->amount - $transaction->fee),
 							currency($transaction->currency->name)) }}</td>
@@ -175,15 +175,14 @@
 						<td>{{ decimalPlace(($transaction->amount + $transaction->fee),
 							currency($transaction->currency->name)) }}</td>
 						@endif
+						<td>{{ $transaction->withdraw_method->name }}</td>
 						{{-- <td>{{ $transaction->dr_cr == 'dr' ? '+ '.decimalPlace($transaction->fee,
 							currency($transaction->currency->name)) : '- '.decimalPlace($transaction->fee,
 							currency($transaction->currency->name)) }}</td>
 						<td><span class="{{ $class }}">{{ $symbol.' '.decimalPlace($transaction->amount,
 								currency($transaction->currency->name)) }}</span></td>
 						<td>{{ strtoupper($transaction->dr_cr) }}</td> --}}
-						<td>{{ str_replace('_',' ',$transaction->type) }}</td>
-						<td>{{ $transaction->method }}</td>
-						<td>{!! xss_clean(transaction_status($transaction->status)) !!}</td>
+						{{-- <td>{!! xss_clean(transaction_status($transaction->status)) !!}</td> --}}
 					</tr>
 					@endforeach
 				</tbody>

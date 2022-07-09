@@ -39,6 +39,18 @@
 
                         <div class="col-md-12">
                             <div class="form-group">
+                                <label class="control-label">{{ _lang('Payment Method') }}</label>
+                                <select class="form-control auto-select select2"
+                                    data-selected="{{ old('withdraw_method_id') }}" name="withdraw_method_id" required>
+                                    <option value="">{{ _lang('Select One') }}</option>
+                                    {{ create_option('withdraw_methods','id','name',old('withdraw_method_id'),
+                                    array('status=' => 1)) }}
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
                                 <label class="control-label">{{ _lang('Amount To Pay') }} | {{ $loan->currency->name
                                     }}{{ $loan->next_payment->amount_to_pay }}</label>
                                 <div class="input-group">
