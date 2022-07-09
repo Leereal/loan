@@ -27,6 +27,7 @@
                                 <div class="col-xl-9">
                                     <select class="form-control auto-select" data-selected="{{ old('title') }}"
                                         name="title" required>
+                                        <option value="">Select Title</option>
                                         <option value="Mr">Mr</option>
                                         <option value="Mrs">Mrs</option>
                                         <option value="Miss">Miss</option>
@@ -61,8 +62,8 @@
                             <div class="form-group row">
                                 <label class="col-xl-3 col-form-label">{{ _lang('Country Code') }}</label>
                                 <div class="col-xl-9">
-                                    <select class="form-control select2 auto-select"
-                                        data-selected="{{ old('country_code') }}" name="country_code" required>
+                                    <select class="form-control select2 auto-select" data-selected="{{263}}"
+                                        name="country_code" required>
                                         <option value="">{{ _lang('Select One') }}</option>
                                         @foreach(get_country_codes() as $key => $value)
                                         <option value="{{ $value['dial_code'] }}">{{ $value['country'].'
@@ -92,7 +93,7 @@
                             <div class="form-group row">
                                 <label class="col-xl-3 col-form-label">{{ _lang('Branch') }}</label>
                                 <div class="col-xl-9">
-                                    <select class="form-control auto-select" data-selected="{{ old('branch_id') }}"
+                                    <select class="form-control auto-select" data-selected="{{Auth::user()->branch_id}}"
                                         name="branch_id" required>
                                         <option value="">{{ _lang('Select One') }}</option>
 					                    {{ create_option('branches','id','name') }}
@@ -104,7 +105,7 @@
                             <div class="form-group row">
                                 <label class="col-xl-3 col-form-label">{{ _lang('Status') }}</label>
                                 <div class="col-xl-9">
-                                    <select class="form-control auto-select" data-selected="{{ old('status') }}"
+                                    <select class="form-control auto-select" data-selected="{{ 1 }}"
                                         name="status" required>
                                         <option value="">{{ _lang('Select One') }}</option>
                                         <option value="1">{{ _lang('Active') }}</option>

@@ -18,6 +18,7 @@
 	<nav class="sb-sidenav-menu-nested nav">
 		<a class="nav-link" href="{{ route('users.create') }}">{{ _lang('Add Client') }}</a>
 		<a class="nav-link" href="{{ route('users.index') }}">{{ _lang('All Clients') }}</a>
+		<a class="nav-link" href="{{ route('employers.index') }}">{{ _lang('Employers') }}</a>
 		{{-- <a class="nav-link" href="{{ route('users.filter') }}/email_verified">{{ _lang('Email Verified') }}</a>
 		<a class="nav-link" href="{{ route('users.filter') }}/sms_verified">{{ _lang('SMS Verified') }}</a>
 		<a class="nav-link" href="{{ route('users.filter') }}/email_unverified">{{ _lang('Email Unverified') }}</a>

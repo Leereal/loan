@@ -138,6 +138,9 @@ Route::middleware(['install'])->group(function () use ($email_verification, $all
             Route::get('users/filter/{status?}', 'UserController@index')->name('users.filter');
             Route::resource('users', 'UserController');
 
+            //Employer Details Controller
+            Route::resource('employers', 'EmployerController');
+
             //Employement Details Controller
             Route::resource('employment_details', 'EmploymentDetailController');
 
