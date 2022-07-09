@@ -76,11 +76,21 @@
         { data: "branch", name: "branch" },
         { data: "status", name: "status" },
       ],  
-      responsive: true,
-    //   responsive: {
-    //     details: false // This will remove the collapse button
-    //   },
-      "scrollX": true,
+      responsive: false,
+      scrollX: true,
+      columnDefs: [
+        { responsivePriority: 1, targets: 0 },
+        { responsivePriority: 2, targets: 2 },
+        { responsivePriority: 3, targets: 5 },
+        { responsivePriority: 4, targets: 7 },
+        { responsivePriority: 4, targets: 8 },
+        { responsivePriority: 4, targets: 9 },
+        { responsivePriority: 4, targets: 10 },
+        { responsivePriority: 4, targets: 11 },
+      ],
+      // responsive: {
+      //   details: false // This will remove the collapse button
+      // },     
       searching: false,
       bStateSave: true,
       bAutoWidth: false,
