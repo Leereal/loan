@@ -231,7 +231,7 @@
     margin-top: 5mm;
   }
 
-  #loans_table, #users_table{
+  #loans_table, #users_table #register_table{
     width:1400px;
     white-space: nowrap;
 

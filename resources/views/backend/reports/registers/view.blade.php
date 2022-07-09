@@ -80,8 +80,7 @@
             </div>
 
             <div class="card-body">
-                <table id="register_table"
-                    class="table table-bordered table-responsive table-hover table-striped display nowrap responsive">
+                <table id="register_table" class="table table-bordered  table-hover table-striped  nowrap ">
                     <thead class="">
                         <tr>
                             <th>{{ _lang('Created Date') }}</th>
