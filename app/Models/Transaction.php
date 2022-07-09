@@ -13,6 +13,7 @@ class Transaction extends Model {
      *
      * @var string
      */
+    protected $guarded =[];
     protected $table = 'transactions';
 
     public function user() {
