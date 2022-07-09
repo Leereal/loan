@@ -12,4 +12,8 @@ class EmploymentDetail extends Model
     public function user() {
         return $this->belongsTo('App\Models\User', 'user_id')->withDefault(['name' => _lang('Default')]);
     }
+
+    public function employer() {
+        return $this->belongsTo('App\Models\Employer', 'employer_id')->withDefault(['name' => _lang('Default')]);
+    }
 }

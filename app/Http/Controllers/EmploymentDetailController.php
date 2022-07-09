@@ -63,6 +63,7 @@ class EmploymentDetailController extends Controller
         $employment_detail->user_id                         = $request->input('user_id');
         $employment_detail->salary                          = $request->input('salary');
         $employment_detail->name                            = $request->input('name');
+        $employment_detail->employer_id                     = $request->input('name');
         $employment_detail->telephone                       = $request->input('telephone');
         $employment_detail->address                         = $request->input('address');
         $employment_detail->limit                           = ceil($employment_detail->salary / 3);// A third of salary
@@ -138,6 +139,7 @@ class EmploymentDetailController extends Controller
         $employment_detail                                  = EmploymentDetail::find($id);      
         $employment_detail->salary                          = $request->input('salary');
         $employment_detail->name                            = $request->input('name');
+        $employment_detail->employer_id                     = $request->input('name');
         $employment_detail->telephone                       = $request->input('telephone');
         $employment_detail->address                         = $request->input('address');
         $employment_detail->limit                           = ceil($employment_detail->salary / 3);// A third of salary

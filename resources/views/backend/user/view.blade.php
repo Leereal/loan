@@ -128,7 +128,7 @@
                                         <table class="table table-bordered">
                                             <tr>
                                                 <td>{{ _lang('Company') }}</td>
-                                                <td>{{ $employment_detail->name }}</td>
+                                                <td>{{ $employment_detail->employer->name}}</td>
                                             </tr>
                                             <tr>
                                                 <td>{{ _lang('Salary') }}</td>
@@ -140,11 +140,11 @@
                                             </tr>
                                             <tr>
                                                 <td>{{ _lang('Telephone') }}</td>
-                                                <td>{{ $employment_detail->telephone }}</td>
+                                                <td>{{ $employment_detail->employer->phone }}</td>
                                             </tr>
                                             <tr>
                                                 <td>{{ _lang('Address') }}</td>
-                                                <td>{{ $employment_detail->address }}</td>
+                                                <td>{{ $employment_detail->employer->address }}</td>
                                             </tr>
                                         </table>
                                     </div>
