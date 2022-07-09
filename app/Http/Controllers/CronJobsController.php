@@ -129,6 +129,7 @@ class CronJobsController extends Controller {
          $interest->status          = 2;
          $interest->note            = 'Loan Interest '.'('.($loan->loan_product->interest_rate/2).'%)';
          $interest->loan_id         = $loan->id;
+         $interest->branch_id       = $loan->branch_id;
          $interest->ip_address      = request()->ip();
          $interest->save();
          
@@ -143,6 +144,7 @@ class CronJobsController extends Controller {
          $penalty->status          = 2;
          $penalty->note            = 'Penalty Fee '.'('.($loan->loan_product->penalty_fee/2).'%)';
          $penalty->loan_id         = $loan->id;
+         $penalty->branch_id       = $loan->branch_id;
          $penalty->ip_address      = request()->ip();
          $penalty->save();
        
