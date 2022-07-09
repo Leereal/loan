@@ -44,19 +44,19 @@ class TransactionController extends Controller {
 
         return Datatables::eloquent($transactions)
             ->filter(function ($query) use ($request) {
-                // if(get_setting(Setting::get(),'branch_view')== 'enabled' && (auth()->user()->role->multiple_branch == 0) ){
-                //     $query->where('transactions.branch_id', Auth::user()->branch->id);                    
-                // }
-                // if ($request->has('status')) {
-                //     $query->where('status', $request->status);
-                // }
-                // if ($request->has('type')) {
-                //     $query->where('type', $request->type);
-                // }
-                // if ($request->has('from_date') && $request->has('to_date') ) {                
-                //     $query ->whereDate('created_at', '>=', date($request->from_date));
-                //     $query->whereDate('created_at', '<=', date($request->to_date));
-                // }
+                if(get_setting(Setting::get(),'branch_view')== 'enabled' && (auth()->user()->role->multiple_branch == 0) ){
+                    $query->where('transactions.branch_id', Auth::user()->branch->id);                    
+                }
+                if ($request->has('status')) {
+                    $query->where('status', $request->status);
+                }
+                if ($request->has('type')) {
+                    $query->where('type', $request->type);
+                }
+                if ($request->has('from_date') && $request->has('to_date') ) {                
+                    $query ->whereDate('created_at', '>=', date($request->from_date));
+                    $query->whereDate('created_at', '<=', date($request->to_date));
+                }
                
             }, true)
             ->editColumn('user.name', function ($transaction) {
