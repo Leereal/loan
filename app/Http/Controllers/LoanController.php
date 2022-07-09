@@ -355,6 +355,7 @@ class LoanController extends Controller {
         $transaction->note            = 'Loan Disbursement';
         $transaction->loan_id         = $loan->id;
         $transaction->ip_address      = request()->ip();
+        $transaction->branch_id       = $loan->branch_id;
         $transaction->created_user_id = auth()->id();
         $transaction->save();
 
@@ -369,6 +370,7 @@ class LoanController extends Controller {
         $transaction->status          = 1;
         $transaction->note            = 'Interest '.'('.($loan->loan_product->interest_rate).'%)';
         $transaction->loan_id         = $loan->id;
+        $transaction->branch_id       = $loan->branch_id;
         $transaction->ip_address      = request()->ip(); 
         $transaction->save();
 
@@ -384,6 +386,7 @@ class LoanController extends Controller {
             $transaction->status          = 1;
             $transaction->note            = 'Service Fee';
             $transaction->loan_id         = $loan->id;
+            $transaction->branch_id       = $loan->branch_id;
             $transaction->ip_address      = request()->ip();
             $transaction->save();
         }       
@@ -399,6 +402,7 @@ class LoanController extends Controller {
         $transaction->status          = 2;
         $transaction->note            = 'Admin Fee';
         $transaction->loan_id         = $loan->id;
+        $transaction->branch_id       = $loan->branch_id;
         $transaction->ip_address      = request()->ip();
         $transaction->created_user_id = auth()->id(); 
         $transaction->save();
