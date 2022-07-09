@@ -24,6 +24,10 @@ class Transaction extends Model {
         return $this->belongsTo('App\Models\Currency', 'currency_id')->withDefault();
     }
 
+    public function withdraw_method() {
+        return $this->belongsTo('App\Models\WithdrawMethod', 'withdraw_method_id')->withDefault();
+    }
+
     public function branch() {
         return $this->belongsTo('App\Models\Branch', 'branch_id')->withDefault();
     }

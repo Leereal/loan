@@ -356,6 +356,7 @@ class LoanController extends Controller {
         $transaction->loan_id         = $loan->id;
         $transaction->ip_address      = request()->ip();
         $transaction->branch_id       = $loan->branch_id;
+        $transaction->withdraw_method_id       = $loan->withdraw_method_id;
         $transaction->created_user_id = auth()->id();
         $transaction->save();
 
@@ -710,6 +711,20 @@ class LoanController extends Controller {
             $loan = Loan::where('id', $loan_id)->first();           
             return view('backend.loan_repayment.create', compact('loan'));
         }else if($request->isMethod("post")){
+
+            $validator = Validator::make($request->all(), [
+                'amount_to_pay'          => 'required|numeric',
+                'withdraw_method_id'     => 'required',
+                'client_id'                => 'required'        
+            ]);
+    
+            if ($validator->fails()) {
+                if ($request->ajax()) {
+                    return response()->json(['result' => 'error', 'message' => $validator->errors()->all()]);
+                } else {
+                    return redirect()->route('loans.repay',$loan_id)->withErrors($validator)->withInput();
+                }
+            }
             
             DB::beginTransaction();
 
@@ -735,6 +750,7 @@ class LoanController extends Controller {
             $debit->created_user_id = auth()->id();
             $debit->ip_address      = request()->ip();
             $debit->branch_id       = auth()->user()->branch_id;
+            $debit->withdraw_method_id       = $request->withdraw_method_id;
             $debit->loan_id         = $loan->id;
 
             $debit->save();

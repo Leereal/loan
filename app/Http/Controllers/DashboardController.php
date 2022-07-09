@@ -60,7 +60,7 @@ class DashboardController extends Controller {
             $query2 = $query2->where([['status', 0],['user_type', 'customer']]);
             $data['inactive_customer']   = $query2->count();
             
-            $data['recent_transactions'] = Transaction::limit(10)
+            $data['recent_transactions'] = Transaction::whereIn('type',['Loan_Disbursement','Loan_Repayment'])->limit(10)
                 ->with('currency')
                 ->orderBy('id', 'desc')
                 ->get();
