@@ -89,7 +89,7 @@ class UserController extends Controller {
             ->addColumn('action', function ($user) {
                 return '<div class="text-center"><form action="' . action('UserController@destroy', $user['id']) . '" class="text-center" method="post">'
                 . '<a href="' . action('UserController@show', $user['id']) . '" class="btn btn-primary btn-sm"><i class="icofont-eye-alt"></i></a>&nbsp;'
-                . '<a href="' . action('UserController@edit', $user['id']) . '" data-title="' . _lang('Update User') . '" class="btn btn-warning btn-sm ajax-modal"><i class="icofont-ui-edit"></i></a>&nbsp;'
+                . '<a href="' . action('UserController@edit', $user['id']) . '" data-title="' . _lang('Update User') . '" class="btn btn-warning btn-sm"><i class="icofont-ui-edit"></i></a>&nbsp;'
                 . csrf_field()
                     . '<input name="_method" type="hidden" value="DELETE">'
                     . '<button class="btn btn-danger btn-sm btn-remove" type="submit"><i class="icofont-trash"></i></button>'
