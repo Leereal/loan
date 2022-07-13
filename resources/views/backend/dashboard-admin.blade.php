@@ -164,7 +164,7 @@
 					$class = $transaction->dr_cr == 'dr' ? 'text-danger' : 'text-success';
 					@endphp
 					<tr>
-						<td>{{ \Carbon\Carbon::parse($transaction->created_at)->diffForHumans() }}</td>
+						<td>{{ $transaction->created_at}}</td>
 						<td>{{ $transaction->currency->name }}</td>
 						<td>{{ $transaction->user->name }}</td>
 						<td>{{ str_replace('_',' ',$transaction->type) }}</td>
