@@ -26,10 +26,7 @@ class DashboardController extends Controller {
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index() {
-        while(true){
-
-        }
+    public function index() {       
         $user      = auth()->user();
         $user_type = $user->user_type;
         $data      = array(); 
