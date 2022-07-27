@@ -245,3 +245,10 @@
     padding: 0%;
     margin: 0%;
 }
+
+tr{
+  line-height: 10px;
+   min-height: 10px;
+   height: 10px;
+   font-size: 80%;
+}
