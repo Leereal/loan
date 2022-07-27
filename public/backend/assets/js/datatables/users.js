@@ -57,6 +57,11 @@
         next: "<i class='icofont-rounded-right'></i>",
       },
     },
+    aLengthMenu: [
+      [25, 50, 100, 200, -1],
+      [25, 50, 100, 200, "All"]
+  ],
+  iDisplayLength: -1,
     drawCallback: function () {
       $(".dataTables_paginate > .pagination").addClass("pagination-bordered");
     },
