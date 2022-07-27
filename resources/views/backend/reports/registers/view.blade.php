@@ -30,6 +30,15 @@
                 </span>
                 @endif
                 <span class="form-group col">
+                    <label for="employer">Employer</label>
+                    <select name="employer" class="select-filter filter-select">
+                        <option value="">{{ _lang('All') }}</option>
+                        @foreach ($employers as $employer )
+                        <option value="{{ $employer->id }}">{{ _lang($employer->name) }}</option>
+                        @endforeach
+                    </select>
+                </span>
+                <span class="form-group col">
                     <label for="age">Age Analysis</label>
                     <select name="age" class="select-filter filter-select">
                         <option value="">{{ _lang('All') }}</option>
@@ -84,15 +93,15 @@
                     <thead class="">
                         <tr>
                             <th>{{ _lang('Created Date') }}</th>
-                            <th>{{ _lang('Loan ID') }}</th>
                             <th>{{ _lang('Client Name') }}</th>
-                            <th>{{ _lang('Cellphone') }}</th>
                             <th>{{ _lang('Loan Product') }}</th>
-                            <th>{{ _lang('Release Date') }}</th>
                             <th>{{ _lang('Applied Amount') }}</th>
-                            <th>{{ _lang('Cash Out') }}</th>
-                            <th>{{ _lang('Total Payable') }}</th>
                             <th>{{ _lang('Total Paid') }}</th>
+                            <th>{{ _lang('Amount Due') }}</th>
+                            <th>{{ _lang('Loan ID') }}</th>
+                            <th>{{ _lang('Cellphone') }}</th>
+                            <th>{{ _lang('Release Date') }}</th>
+                            <th>{{ _lang('Cash Out') }}</th>
                             <th>{{ _lang('First Payment Date') }}</th>
                             <th>{{ _lang('Disbursement Method') }}</th>
                             <th>{{ _lang('Penalties') }}</th>

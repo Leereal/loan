@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Branch;
 use App\Models\Currency;
+use App\Models\Employer;
 use App\Models\Loan;
 use App\Models\LoanProduct;
 use App\Models\Setting;
@@ -143,12 +144,13 @@ class RegistersController extends Controller
     public function view(Request $request){
         $name=$request->name;
         $currencies     = Currency::all();
+        $employers     = Employer::all();
         $loan_products     = LoanProduct::all();
         $withdraw_methods     = WithdrawMethod::all();
         $branches       = Branch::all();
         $ages           = ["Current","1 Month","2 Months","3 Months","3 to < 6 Months","6 to 12 Months","+1 Year"];
    
-        return view('backend.reports.registers.view', compact('currencies', 'branches','ages','name','withdraw_methods','loan_products'));
+        return view('backend.reports.registers.view', compact('currencies', 'branches','ages','name','withdraw_methods','loan_products','employers'));
     }
 
     public function get_register_table_data(Request $request) {
@@ -204,10 +206,16 @@ class RegistersController extends Controller
                 if ($request->has('loan_product')) {
                     $query->where('loans.loan_product_id', $request->loan_product);
                 }
+                if ($request->has('employer')) {
+                    $query->where('borroweremployers.employer_id', $request->employer);
+                }
             }, true)
         
             ->editColumn('loan_product', function ($loan){ 
                 return $loan->loan_product->name;
+            })
+            ->editColumn('created_at', function ($loan){ 
+                return  date('Y-m-d', strtotime(($loan->created_at)));
             })
             ->editColumn('loan_id', function ($loan){
               
