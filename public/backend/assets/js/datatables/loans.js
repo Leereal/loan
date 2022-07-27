@@ -20,12 +20,12 @@
     },
     order: [[0, "asc"]],
     columns: [
-      { data: "loan_id", name: "loan_id", orderable: true },
-      { data: "loan_product.name", name: "loan_product.name" },
-      { data: "borrower.name", name: "borrower.name" },
       { data: "release_date", name: "release_date" },
-      { data: "applied_amount", name: "applied_amount" },
-      { data: "total_payable", name: "total_payable" },
+      { data: "borrower.name", name: "borrower.name" },  
+      { data: "total_payable", name: "total_payable" }, 
+      { data: "loan_id", name: "loan_id", orderable: true },
+      { data: "loan_product.name", name: "loan_product.name" },         
+      { data: "applied_amount", name: "applied_amount" },     
       { data: "status", name: "status" },
       { data: "action", name: "action" },
     ],
@@ -33,8 +33,8 @@
     scrollX: true,
     columnDefs: [
       { responsivePriority: 1, targets: 0 },
-      { responsivePriority: 2, targets: 2 },
-      { responsivePriority: 3, targets: 5 },
+      { responsivePriority: 2, targets: 1 },
+      { responsivePriority: 3, targets: 2 },
       { responsivePriority: 4, targets: 7 },
     ],
     bStateSave: true,
@@ -66,7 +66,12 @@
         previous: "<i class='icofont-rounded-left'></i>",
         next: "<i class='icofont-rounded-right'></i>",
       },
-    },
+    },   
+    aLengthMenu: [
+        [25, 50, 100, 200, -1],
+        [25, 50, 100, 200, "All"]
+    ],
+    iDisplayLength: -1,
     drawCallback: function () {
       $(".dataTables_paginate > .pagination").addClass("pagination-bordered");
     },
