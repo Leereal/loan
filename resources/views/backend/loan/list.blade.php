@@ -28,7 +28,6 @@
 							<th>{{ _lang('Loan ID') }}</th>
 							<th>{{ _lang('Loan Product') }}</th>
 							<th>{{ _lang('Applied Amount') }}</th>
-
 							<th>{{ _lang('Status') }}</th>
 							<th class="text-center">{{ _lang('Action') }}</th>
 						</tr>
